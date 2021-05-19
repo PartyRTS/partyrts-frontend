@@ -5,16 +5,15 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {RouterModule} from '@angular/router';
-import {HeaderSimpleComponent} from './components/header-simple/header-simple.component';
+import {MatInputModule} from '@angular/material/input';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    HeaderSimpleComponent
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -22,6 +21,7 @@ import {HeaderSimpleComponent} from './components/header-simple/header-simple.co
     MatIconModule,
     MatButtonModule,
     RouterModule,
+    MatInputModule,
   ]
 })
 export class SharedModule {

@@ -11,6 +11,12 @@ import {RegisterPage} from './pages/register/register.page';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UserPage} from './pages/user/user.page';
 import {RoomPage} from './pages/room/room.page';
+import {SharedModule} from '../../features/shared/shared.module';
+import {VideoModule} from '../../features/video/video.module';
+import {UserVideosPage} from './pages/user-videos/user-videos.page';
+import {UserPlaylistsPage} from './pages/user-playlists/user-playlists.page';
+import {UserFriendsPage} from './pages/user-friends/user-friends.page';
+import {SettingsPage} from './pages/settings/settings.page';
 
 
 @NgModule({
@@ -20,6 +26,10 @@ import {RoomPage} from './pages/room/room.page';
     RegisterPage,
     UserPage,
     RoomPage,
+    UserVideosPage,
+    UserPlaylistsPage,
+    UserFriendsPage,
+    SettingsPage,
   ],
   imports: [
     CommonModule,
@@ -30,6 +40,8 @@ import {RoomPage} from './pages/room/room.page';
     MatOptionModule,
     ReactiveFormsModule,
     FormsModule,
+    SharedModule,
+    VideoModule,
   ]
 })
 export class MainModule {

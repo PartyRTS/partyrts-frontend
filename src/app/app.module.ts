@@ -7,6 +7,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppRoutingModule} from './app-routing.module';
 import {CoreModule} from './features/core/core.module';
 import {MainModule} from './routed/main/main.module';
+import {UserModule} from './features/user/user.module';
+import {VideoModule} from './features/video/video.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import {MainModule} from './routed/main/main.module';
     SharedModule,
     CoreModule,
     MainModule,
+    UserModule,
+    VideoModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

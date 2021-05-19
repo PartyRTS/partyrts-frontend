@@ -5,6 +5,10 @@ import {LoginPage} from './pages/login/login.page';
 import {RegisterPage} from './pages/register/register.page';
 import {UserPage} from './pages/user/user.page';
 import {RoomPage} from './pages/room/room.page';
+import {UserVideosPage} from './pages/user-videos/user-videos.page';
+import {UserPlaylistsPage} from './pages/user-playlists/user-playlists.page';
+import {UserFriendsPage} from './pages/user-friends/user-friends.page';
+import {SettingsPage} from './pages/settings/settings.page';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'prefix'},
@@ -12,7 +16,13 @@ const routes: Routes = [
   {path: 'login', component: LoginPage},
   {path: 'register', component: RegisterPage},
   {path: 'users/:id', component: UserPage},
+  {path: 'users/:id/videos', component: UserVideosPage},
+  {path: 'users/:id/playlists', component: UserPlaylistsPage},
+  {path: 'users/:id/friends', component: UserFriendsPage},
+  {path: 'settings', component: SettingsPage},
   {path: 'rooms/:id', component: RoomPage},
+
+
 ];
 
 @NgModule({

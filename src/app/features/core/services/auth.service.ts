@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {User} from '../models/user.model';
-import {UserService} from './user.service';
+import {User} from '../../user/models/user.model';
+import {UserService} from '../../user/services/user.service';
 import {LoginRequest} from '../models/login-request.model';
 import {tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {NewUser} from '../models/new-user.model';
+import {NewUser} from '../../user/models/new-user.model';
 
 @Injectable({
   providedIn: 'root'

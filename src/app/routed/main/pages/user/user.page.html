@@ -1,7 +1,50 @@
-<p>user works!</p>
+<div class="d-flex">
+  <div class="d-flex flex-column">
+    <img alt="user avatar" src="https://via.placeholder.com/300">
 
-<div>
-  <div>user Id: 1</div>
-  <div>email:</div>
-  <div>user name: bla balb al</div>
+    <button mat-button>создать стрим</button>
+  </div>
+  <div class="flex-grow-1">
+    <h1>Alan Wake</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque doloremque enim nostrum, quae quas reiciendis
+      voluptate! Corporis doloremque impedit minus odit velit. At autem, facilis laudantium pariatur soluta unde
+      vero!</p>
+
+    <button mat-button>Добавить в деузья</button>
+  </div>
+</div>
+
+<div class="d-flex flex-column">
+  <h2>Активный стрим</h2>
+
+  <div class="d-flex">
+    <app-stream-card></app-stream-card>
+  </div>
+</div>
+
+
+<div class="d-flex flex-column">
+  <div class="d-flex justify-content-between">
+    <h2>Плейлисты</h2>
+    <button mat-button>Все плейлисты</button>
+  </div>
+
+  <div class="d-flex">
+    <app-playlist-card></app-playlist-card>
+    <app-playlist-card></app-playlist-card>
+  </div>
+</div>
+
+<div class="d-flex flex-column">
+  <div class="d-flex justify-content-between">
+    <h2>Библиотека видео</h2>
+    <button mat-button>Все видео</button>
+  </div>
+
+  <div class="d-flex">
+    <app-video-card></app-video-card>
+    <app-video-card></app-video-card>
+    <app-video-card></app-video-card>
+    <app-video-card></app-video-card>
+  </div>
 </div>
