@@ -4,6 +4,7 @@ import {VideoCardComponent} from './components/video-card/video-card.component';
 import {PlaylistCardComponent} from './components/playlist-card/playlist-card.component';
 import {StreamCardComponent} from './components/stream-card/stream-card.component';
 import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {MatIconModule} from '@angular/material/icon';
   ],
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
   ]
 })
 export class VideoModule {
