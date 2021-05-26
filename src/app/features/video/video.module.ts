@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {VideoCardComponent} from './components/video-card/video-card.component';
-import {PlaylistCardComponent} from './components/playlist-card/playlist-card.component';
-import {StreamCardComponent} from './components/stream-card/stream-card.component';
+import {PlaylistCardComponent} from '../playlist/components/playlist-card/playlist-card.component';
+import {StreamCardComponent} from '../stream/components/stream-card/stream-card.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 

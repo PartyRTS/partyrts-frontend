@@ -1,5 +1,10 @@
 export interface User {
-  userId: number;
-  name: string;
+  idUser: number;
   email: string;
+  firstName: string;
+  secondName: string;
+  logoUrl: string;
+  registrationDate: Date;
+  birthdayDate: Date;
+  description: string;
 }
