@@ -1,0 +1,21 @@
+<div class="chat">
+  <div #messagesContainer class="messages">
+    <div *ngFor="let message of messages" class="message">
+      <div class="message-content">
+        <div class="message-text">
+          <span class="message-author">{{message.username}}</span>
+          {{message.text}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form">
+    <mat-form-field class="form-input">
+      <input (keyup.enter)="onSend()" [formControl]="inputMessageForm" matInput placeholder="сообщение">
+    </mat-form-field>
+    <button (click)="onSend()" class="form-button" mat-button>
+      <mat-icon class="material-icons-outlined">send</mat-icon>
+    </button>
+  </div>
+</div>

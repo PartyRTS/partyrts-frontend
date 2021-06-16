@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {User} from '../models/user.model';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
+import {LoginRequest} from '../../core/models/login-request.model';
+import {NewUser} from '../models/new-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +19,14 @@ export class UserService {
   }
 
   getUser(userId: number): Observable<User> {
-    return this.http.get<User>(`/api/v1/users/${userId}`);
+    return this.http.get<User>(environment.apiUrl + `/api/v1/users/${userId}`);
   }
 
-  // login(loginRequest: LoginRequest): Observable<User> {
-  //   return this.http.post<User>(`/api/v1/public/login`, loginRequest);
-  // }
-  //
-  // register(newUser: NewUser): Observable<User> {
-  //   return this.http.post<User>(`/api/v1/public/register`, newUser);
-  // }
+  login(loginRequest: LoginRequest): Observable<User> {
+    return this.http.post<User>(`/api/v1/users/login`, loginRequest);
+  }
+
+  register(newUser: NewUser): Observable<User> {
+    return this.http.post<User>(environment.apiUrl + `/api/v1/users/register`, newUser);
+  }
 }

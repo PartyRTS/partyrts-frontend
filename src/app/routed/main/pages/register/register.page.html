@@ -1,25 +1,40 @@
 <div class="register-form">
   <h2 class="text-center mb-3">Register</h2>
 
-  <div class="w-100">
-    <mat-form-field appearance="fill" class="w-100">
-      <mat-label>Логин</mat-label>
-      <input matInput type="text">
+  <div [formGroup]="form" class="w-100">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Имя</mat-label>
+      <input formControlName="firstName" matInput type="text">
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="w-100">
-      <mat-label>Описание пользователя</mat-label>
-      <textarea matInput type="text"></textarea>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Фамилия</mat-label>
+      <input formControlName="secondName" matInput type="text">
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="w-100">
+    <mat-form-field appearance="outline" class="w-100">
+      <input formControlName="email" matInput type="text">
+      <mat-label>Email</mat-label>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Описание</mat-label>
+      <textarea formControlName="description" matInput type="text"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Дата рождения</mat-label>
+      <input formControlName="birthdayDate" matInput type="date">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
       <mat-label>Пароль</mat-label>
-      <input matInput type="password">
+      <input formControlName="password" matInput type="password">
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="w-100">
+    <mat-form-field appearance="outline" class="w-100">
       <mat-label>Confirm password</mat-label>
-      <input matInput type="password">
+      <input formControlName="passwordAgain" matInput type="password">
     </mat-form-field>
   </div>
 

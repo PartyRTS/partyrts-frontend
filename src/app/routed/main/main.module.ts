@@ -17,6 +17,8 @@ import {UserVideosPage} from './pages/user-videos/user-videos.page';
 import {UserPlaylistsPage} from './pages/user-playlists/user-playlists.page';
 import {UserFriendsPage} from './pages/user-friends/user-friends.page';
 import {SettingsPage} from './pages/settings/settings.page';
+import {RoomChatComponent} from './pages/room/components/room-chat/room-chat.component';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -30,6 +32,7 @@ import {SettingsPage} from './pages/settings/settings.page';
     UserPlaylistsPage,
     UserFriendsPage,
     SettingsPage,
+    RoomChatComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +41,7 @@ import {SettingsPage} from './pages/settings/settings.page';
     MatSelectModule,
     MatInputModule,
     MatOptionModule,
+    MatIconModule,
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
