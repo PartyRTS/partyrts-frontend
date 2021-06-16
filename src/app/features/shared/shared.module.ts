@@ -6,6 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {RouterModule} from '@angular/router';
 import {MatInputModule} from '@angular/material/input';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {MatInputModule} from '@angular/material/input';
     MatButtonModule,
     RouterModule,
     MatInputModule,
+    MatMenuModule,
   ]
 })
 export class SharedModule {

@@ -1,20 +1,19 @@
-<div class="container">
+<div *ngIf="user$ | async as user" class="container">
 
   <div class="d-flex">
     <div class="d-flex flex-column m-4">
-      <img alt="user avatar" src="https://via.placeholder.com/200">
+      <img alt="user avatar" height="200" src="{{user.logoUrl ? user.logoUrl : 'https://via.placeholder.com/200'}}"
+           width="200">
 
       <button mat-button>создать стрим</button>
     </div>
 
     <div class="flex-grow-1 m-4">
-      <h1>Alan Wake</h1>
+      <h1>{{user.firstName}} {{user.secondName}}</h1>
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque doloremque enim nostrum, quae quas reiciendis
-        voluptate! Corporis doloremque impedit minus odit velit. At autem, facilis laudantium pariatur soluta unde
-        vero!</p>
+      <p>{{user.description}}</p>
 
-      <button mat-button>Добавить в деузья</button>
+      <button mat-button>Добавить в друзья</button>
     </div>
   </div>
 

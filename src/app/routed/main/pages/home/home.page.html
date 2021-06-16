@@ -1,7 +1,7 @@
 <div class="container-fluid row">
   <div class="col-2">
 
-    <div class="my-2">
+    <div *ngIf="user$ | async" class="my-2">
       <div class="ml-2 my-3 menu-list-header">Друзья</div>
 
       <div class="mt-4">
@@ -29,18 +29,15 @@
     <div class="my-2">
       <div class="ml-2 my-3 menu-list-header">Популярные категории</div>
       <div class="mt-4">
-        <div class="mb-2 p-1 menu-list-element">
-          <div>#Anime</div>
-        </div>
-        <div class="mb-2 p-1 menu-list-element">
-          <div>#Games</div>
+        <div *ngFor="let category of categories$ | async" class="mb-2 p-1 menu-list-element">
+          <div>#{{category.title}}</div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="col-10">
-    <div>
+    <div *ngIf="user$ | async">
       <h2 class="mt-4 text-center">Трансляции друзей</h2>
       <div class="row">
         <app-stream-card></app-stream-card>
@@ -49,7 +46,7 @@
     </div>
 
     <div>
-      <h2 class="mt-4 text-center">Саммые популярные трансляции(по зрителям)</h2>
+      <h2 class="mt-4 text-center">Самые популярные трансляции(по зрителям)</h2>
       <div class="row">
         <app-stream-card *ngFor="let stream of streams$ | async"
                          [streamId]="stream.idStream"

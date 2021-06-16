@@ -16,6 +16,18 @@
   </div>
 
   <div *ngIf="user" class="col row justify-content-end">
-    <button (click)="logout()" mat-button>Выйти</button>
+    <div [matMenuTriggerFor]="menu">
+      <img class="rounded-circle" height="40px" src="{{user.logoUrl ? user.logoUrl : 'https://via.placeholder.com/30'}}"
+           width="40px">
+    </div>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/users/{{user.idUser}}">
+        <span>Страница пользователя</span>
+      </button>
+      <button (click)="logout()" mat-menu-item>
+        <span>Выйти из аккаунта</span>
+      </button>
+    </mat-menu>
+
   </div>
 </mat-toolbar>
