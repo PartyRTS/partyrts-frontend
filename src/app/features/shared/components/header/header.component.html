@@ -10,8 +10,12 @@
     </button>
   </div>
 
-  <div class="col row justify-content-end">
+  <div *ngIf="!user" class="col row justify-content-end">
     <button mat-button routerLink="/login">Войти</button>
     <button mat-button routerLink="/register">Зарегестрироваться</button>
+  </div>
+
+  <div *ngIf="user" class="col row justify-content-end">
+    <button (click)="logout()" mat-button>Выйти</button>
   </div>
 </mat-toolbar>

@@ -2,15 +2,15 @@
   <h2 class="text-center mb-3">Вход в аккаунт</h2>
 
 
-  <div class="w-100">
+  <div [formGroup]="form" class="w-100">
     <mat-form-field appearance="fill" class="w-100">
       <mat-label>Логин</mat-label>
-      <input matInput type="email">
+      <input formControlName="email" matInput type="email">
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="w-100">
       <mat-label>Пароль</mat-label>
-      <input matInput type="password">
+      <input formControlName="password" matInput type="password">
     </mat-form-field>
   </div>
 

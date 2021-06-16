@@ -1,18 +1,16 @@
 import {Injectable} from '@angular/core';
-import {LoginRequest} from '../models/login-request.model';
 import {tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {CurrentUserService} from './current-user.service';
 import {User} from '../../user/models/user.model';
 import {UserService} from '../../user/services/user.service';
 import {NewUser} from '../../user/models/new-user.model';
+import {LoginRequest} from '../../user/models/login-request.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  currentUser: User | undefined;
 
   constructor(
     private readonly userService: UserService,
@@ -21,6 +19,7 @@ export class AuthService {
   }
 
   static saveUserInStorage(u: User): void {
+    console.log('save user in storage with id ' + u.idUser);
     localStorage.setItem('userId', String(u.idUser));
   }
 
