@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {NewUser} from '../models/new-user.model';
 import {LoginRequest} from '../models/login-request.model';
+import {UpdateUser} from '../models/update-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,14 @@ export class UserService {
 
   getUser(userId: number): Observable<User> {
     return this.http.get<User>(environment.apiUrl + `/api/v1/users/${userId}`);
+  }
+
+  updateUser(userId: number, updateUser: UpdateUser): Observable<null> {
+    return this.http.post<null>(environment.apiUrl + `/api/v1/users/${userId}`, updateUser);
+  }
+
+  updateUserPassword(userId: number, updateUser: UpdateUser): Observable<null> {
+    return this.http.post<null>(environment.apiUrl + `/api/v1/users/${userId}`, updateUser);
   }
 
   login(loginRequest: LoginRequest): Observable<User> {

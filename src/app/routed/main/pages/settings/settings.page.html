@@ -1,24 +1,40 @@
-<div class="container">
+<div *ngIf="user$ | async as user" class="container">
+
   <div class="d-flex flex-column justify-content-center">
     <div class="h3 mt-3 text-center">Информация о пользователе</div>
 
     <div class="mt-3 d-flex justify-content-center">
-      <img alt="video preview" src="https://via.placeholder.com/250">
+      <img alt="video preview" height="250" src="{{user.logoUrl}}" width="250">
     </div>
 
 
-    <div class="mt-4">
+    <div [formGroup]="form" class="mt-4">
       <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Логин</mat-label>
-        <input matInput type="text">
+        <mat-label>Имя</mat-label>
+        <input formControlName="firstName" matInput type="text">
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Описание пользователя</mat-label>
-        <textarea matInput type="text"></textarea>
+        <mat-label>Фамилия</mat-label>
+        <input formControlName="secondName" matInput type="text">
       </mat-form-field>
 
-      <button mat-flat-button>Сохранить</button>
+      <mat-form-field appearance="outline" class="w-100">
+        <input formControlName="email" matInput type="text">
+        <mat-label>Email</mat-label>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Описание</mat-label>
+        <textarea formControlName="description" matInput type="text"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Дата рождения</mat-label>
+        <input formControlName="birthdayDate" matInput type="date">
+      </mat-form-field>
+
+      <button (click)="saveMainInfo()" mat-flat-button>Сохранить</button>
     </div>
 
     <div class="mt-4">
