@@ -5,6 +5,8 @@ import {CurrentUserService} from '../../../../features/core/services/current-use
 import {UserService} from '../../../../features/user/services/user.service';
 import {ActivatedRoute} from '@angular/router';
 import {FriendRequestService} from '../../../../features/user/services/friend-request.service';
+import {Video} from '../../../../features/video/models/video.model';
+import {UserVideoService} from '../../../../features/user/services/user-video.service';
 
 @Component({
   selector: 'app-user',
@@ -13,6 +15,7 @@ import {FriendRequestService} from '../../../../features/user/services/friend-re
 })
 export class UserPage implements OnInit {
   user$: Observable<User>;
+  videos$: Observable<Video[]>;
   userId: number;
   currentUserId: number;
 
@@ -20,16 +23,16 @@ export class UserPage implements OnInit {
     private readonly currentUserService: CurrentUserService,
     private readonly userService: UserService,
     private readonly friendRequestService: FriendRequestService,
+    private readonly userVideoService: UserVideoService,
     private readonly route: ActivatedRoute,
   ) {
   }
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.params.id;
-    this.currentUserService.user$.subscribe(currentUser => {
-      this.currentUserId = currentUser?.idUser;
-    });
+    this.currentUserId = this.currentUserService.userId;
     this.user$ = this.userService.getUser(this.userId);
+    this.videos$ = this.userVideoService.getAllVideos(this.userId);
   }
 
   addToFriend(): void {

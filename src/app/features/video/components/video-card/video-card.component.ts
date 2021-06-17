@@ -1,4 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {VideoService} from '../../services/video.service';
+import {Observable} from 'rxjs';
+import {Video} from '../../models/video.model';
+import {User} from '../../../user/models/user.model';
+import {UserService} from '../../../user/services/user.service';
 
 @Component({
   selector: 'app-video-card',
@@ -9,15 +14,21 @@ export class VideoCardComponent implements OnInit {
 
   @Input()
   videoId;
-  @Input()
-  title: string;
-  @Input()
-  previewUrl: string;
 
-  constructor() {
+  video$: Observable<Video>;
+  creator$: Observable<User>;
+
+  constructor(
+    private readonly videoService: VideoService,
+    private readonly userService: UserService,
+  ) {
   }
 
   ngOnInit(): void {
+    this.video$ = this.videoService.getVideo(this.videoId);
+    this.video$.subscribe(value => {
+      this.creator$ = this.userService.getUser(value.idUser);
+    });
   }
 
 }

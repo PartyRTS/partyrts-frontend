@@ -1,13 +1,10 @@
-<div class="container">
+<div *ngIf="user$ | async as user" class="container">
   <h1>
-    Видео <a href="/">Alan Wake</a>
+    Видео <a href="/users/{{user.idUser}}">{{user.firstName}} {{user.secondName}}</a>
   </h1>
   <div class="row">
-    <app-video-card></app-video-card>
-    <app-video-card></app-video-card>
-    <app-video-card></app-video-card>
-    <app-video-card></app-video-card>
-    <app-video-card></app-video-card>
-    <app-video-card></app-video-card>
+    <app-video-card *ngFor="let video of videos$ | async"
+                    [videoId]="video.idVideo">
+    </app-video-card>
   </div>
 </div>

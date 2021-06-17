@@ -7,12 +7,16 @@ import {Video} from '../models/video.model';
 @Injectable({
   providedIn: 'root'
 })
-export class UserVideoService {
+export class VideoService {
 
   constructor(private readonly http: HttpClient) {
   }
 
-  getAllVideos(userId: number): Observable<Video[]> {
-    return this.http.get<Video[]>(`${environment.apiUrl}/api/v1/users/${userId}/streams`);
+  getAllVideos(): Observable<Video[]> {
+    return this.http.get<Video[]>(`${environment.apiUrl}/api/v1/videos`);
+  }
+
+  getVideo(videoId: number): Observable<Video> {
+    return this.http.get<Video>(`${environment.apiUrl}/api/v1/videos/${videoId}`);
   }
 }
