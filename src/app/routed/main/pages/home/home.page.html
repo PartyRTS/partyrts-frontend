@@ -29,9 +29,9 @@
     <div class="my-2">
       <div class="ml-2 my-3 menu-list-header">Популярные категории</div>
       <div class="mt-4">
-        <div *ngFor="let category of categories$ | async" class="mb-2 p-1 menu-list-element">
+        <button *ngFor="let category of categories$ | async" class="mb-2 p-1 w-100 text-left" mat-button>
           <div>#{{category.title}}</div>
-        </div>
+        </button>
       </div>
     </div>
   </div>
