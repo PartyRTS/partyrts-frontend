@@ -6,6 +6,7 @@ import {environment} from '../../../../environments/environment';
 import {NewUser} from '../models/new-user.model';
 import {LoginRequest} from '../models/login-request.model';
 import {UpdateUser} from '../models/update-user.model';
+import {UpdatePasswordRequest} from '../models/update-password-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +25,15 @@ export class UserService {
   }
 
   updateUser(userId: number, updateUser: UpdateUser): Observable<null> {
-    return this.http.post<null>(environment.apiUrl + `/api/v1/users/${userId}`, updateUser);
+    return this.http.put<null>(environment.apiUrl + `/api/v1/users/${userId}`, updateUser);
   }
 
-  updateUserPassword(userId: number, updateUser: UpdateUser): Observable<null> {
-    return this.http.post<null>(environment.apiUrl + `/api/v1/users/${userId}`, updateUser);
+  deleteUser(userId: number): Observable<null> {
+    return this.http.delete<null>(`${environment.apiUrl}/api/v1/users/${userId}`);
+  }
+
+  updateUserPassword(userId: number, updatePasswordRequest: UpdatePasswordRequest): Observable<null> {
+    return this.http.put<null>(environment.apiUrl + `/api/v1/users/${userId}/password`, updatePasswordRequest);
   }
 
   getAllFriends(userId: number): Observable<User[]> {

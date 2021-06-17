@@ -8,7 +8,7 @@
     </div>
 
 
-    <div [formGroup]="form" class="mt-4">
+    <div [formGroup]="infoForm" class="mt-4">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Имя</mat-label>
         <input formControlName="firstName" matInput type="text">
@@ -34,26 +34,26 @@
         <input formControlName="birthdayDate" matInput type="date">
       </mat-form-field>
 
-      <button (click)="saveMainInfo()" mat-flat-button>Сохранить</button>
+      <button (click)="saveInfo()" mat-flat-button>Сохранить</button>
     </div>
 
-    <div class="mt-4">
+    <div [formGroup]="passwordForm" class="mt-4">
       <div class="h4 mt-3">Изменить пароль</div>
 
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Старый пароль</mat-label>
-        <input matInput type="password">
+        <input formControlName="oldPassword" matInput type="password">
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Новый пароль</mat-label>
-        <input matInput type="password">
+        <input formControlName="newPassword" matInput type="password">
       </mat-form-field>
 
-      <button mat-flat-button>Сохранить</button>
+      <button (click)="savePassword()" mat-flat-button>Сохранить</button>
     </div>
 
-    <button class="mt-5 mat-button" color="warn" mat-flat-button>Удалить аккаунт</button>
+    <button (click)="deleteAccount()" class="mt-5 mat-button" color="warn" mat-flat-button>Удалить аккаунт</button>
 
   </div>
 </div>
