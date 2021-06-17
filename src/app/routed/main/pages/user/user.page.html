@@ -13,7 +13,8 @@
 
       <p>{{user.description}}</p>
 
-      <button mat-button>Добавить в друзья</button>
+      <button (click)="addToFriend()" *ngIf="currentUserId && userId !== currentUserId" mat-button>Добавить в друзья
+      </button>
     </div>
   </div>
 
@@ -29,7 +30,7 @@
   <div class="d-flex flex-column">
     <div class="d-flex justify-content-between">
       <h2>Плейлисты</h2>
-      <button mat-button>Все плейлисты</button>
+      <button mat-button routerLink="/users/{{user.idUser}}/playlists">Все плейлисты</button>
     </div>
 
     <div class="d-flex">
@@ -41,7 +42,7 @@
   <div class="d-flex flex-column">
     <div class="d-flex justify-content-between">
       <h2>Библиотека видео</h2>
-      <button mat-button>Все видео</button>
+      <button mat-button routerLink="/users/{{user.idUser}}/videos">Все видео</button>
     </div>
 
     <div class="d-flex">

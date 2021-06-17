@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiHost: 'pws21-backend.herokuapp.com',
-  apiUrl: 'https://pws21-backend.herokuapp.com',
+  apiHost: 'localhost:8080',
+  apiUrl: 'http://localhost:8080',
 };
 
 /*

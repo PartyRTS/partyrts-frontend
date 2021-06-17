@@ -1,25 +1,25 @@
-<div class="container">
+<div *ngIf="user$ | async as user" class="container">
   <h1>
-    Друзья <a href="/">Alan Wake</a>
+    Друзья <a href="/">{{user.firstName}} {{user.secondName}}</a>
   </h1>
 
   <div class="mt-4">
     <h2>Новые заявки</h2>
 
     <div>
-      <div *ngFor="let friendRequest of friendRequests" class="row border p-2 mb-2">
+      <div *ngFor="let subscriber of subscribers$ | async" class="row border p-2 mb-2">
         <div class="col-auto">
-          <img alt="friend-request avatar" class="rounded-circle" height="40px" src="{{friendRequest.logoUrl}}"
+          <img alt="friend-request avatar" class="rounded-circle" height="40px" src="{{subscriber.logoUrl}}"
                width="40px">
         </div>
 
         <div class="col d-flex justify-items-center">
-          <div>{{friendRequest.firstName + ' ' + friendRequest.secondName}}</div>
+          <div>{{subscriber.firstName + ' ' + subscriber.secondName}}</div>
         </div>
 
         <div class="col-auto">
-          <button mat-button>Добавить в друзья</button>
-          <button mat-button>Отклонить</button>
+          <button (click)="acceptFriendRequest(subscriber.idUser)" mat-button>Добавить в друзья</button>
+          <button (click)="declineFriendRequest(subscriber.idUser)" mat-button>Отклонить</button>
         </div>
       </div>
     </div>
@@ -28,7 +28,7 @@
   <div class="mt-4">
     <h2>Друзья</h2>
     <div>
-      <div *ngFor="let friend of friends" class="row border p-2 mb-2">
+      <div *ngFor="let friend of friends$ | async" class="row border p-2 mb-2">
         <div class="col-auto">
           <img alt="friend-request avatar" class="rounded-circle" height="40px" src="{{friend.logoUrl}}"
                width="40px">
@@ -39,7 +39,7 @@
         </div>
 
         <div class="col-auto">
-          <button mat-button>Удалить из друзей</button>
+          <button (click)="deleteFriend(friend.idUser)" mat-button>Удалить из друзей</button>
         </div>
       </div>
     </div>

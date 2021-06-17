@@ -31,6 +31,14 @@ export class UserService {
     return this.http.post<null>(environment.apiUrl + `/api/v1/users/${userId}`, updateUser);
   }
 
+  getAllFriends(userId: number): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiUrl}/api/v1/users/${userId}/friends`);
+  }
+
+  deleteFriend(userId: number, friendId: number): Observable<null> {
+    return this.http.delete<null>(`${environment.apiUrl}/api/v1/users/${userId}/friends/${friendId}`);
+  }
+
   login(loginRequest: LoginRequest): Observable<User> {
     return this.http.post<User>(environment.apiUrl + `/api/v1/users/login`, loginRequest);
   }
