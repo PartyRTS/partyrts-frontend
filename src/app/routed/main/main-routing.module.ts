@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'users/:id', component: UserPage},
   {path: 'users/:id/videos', component: UserVideosPage},
   {path: 'users/:id/playlists', component: UserPlaylistsPage},
-  {path: 'users/:id/friends', component: UserFriendsPage},
+  {path: 'friends', component: UserFriendsPage},
   {path: 'settings', component: SettingsPage},
   {path: 'rooms/:id', component: RoomPage},
 
