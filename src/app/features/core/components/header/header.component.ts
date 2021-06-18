@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {CurrentUserService} from '../../../core/services/current-user.service';
+import {CurrentUserService} from '../../services/current-user.service';
 import {User} from '../../../user/models/user.model';
-import {AuthService} from '../../../core/services/auth.service';
+import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
+import {SearchService} from '../../services/search.service';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +17,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private readonly currentUserService: CurrentUserService,
     private readonly authService: AuthService,
+    private readonly searchService: SearchService,
+    private readonly router: Router,
   ) {
 
   }
@@ -28,5 +32,10 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  search(name: string): void {
+    this.searchService.search(name);
+    this.router.navigate(['/search'], {queryParams: {name}});
   }
 }

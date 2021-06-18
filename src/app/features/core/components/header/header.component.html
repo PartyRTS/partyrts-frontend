@@ -4,8 +4,8 @@
   </div>
 
   <div class="col row">
-    <input class="flex-grow-1">
-    <button mat-button>
+    <input #searchForm class="flex-grow-1">
+    <button (click)="search(searchForm.value)" mat-button>
       <mat-icon>search</mat-icon>
     </button>
   </div>

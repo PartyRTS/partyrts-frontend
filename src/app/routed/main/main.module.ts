@@ -11,7 +11,6 @@ import {RegisterPage} from './pages/register/register.page';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UserPage} from './pages/user/user.page';
 import {RoomPage} from './pages/room/room.page';
-import {SharedModule} from '../../features/shared/shared.module';
 import {VideoModule} from '../../features/video/video.module';
 import {UserVideosPage} from './pages/user-videos/user-videos.page';
 import {UserPlaylistsPage} from './pages/user-playlists/user-playlists.page';
@@ -20,6 +19,7 @@ import {SettingsPage} from './pages/settings/settings.page';
 import {RoomChatComponent} from './pages/room/components/room-chat/room-chat.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
+import {SearchPage} from './pages/search/search.page';
 
 
 @NgModule({
@@ -34,6 +34,7 @@ import {MatListModule} from '@angular/material/list';
     UserFriendsPage,
     SettingsPage,
     RoomChatComponent,
+    SearchPage,
   ],
   imports: [
     CommonModule,
@@ -45,7 +46,6 @@ import {MatListModule} from '@angular/material/list';
     MatIconModule,
     ReactiveFormsModule,
     FormsModule,
-    SharedModule,
     VideoModule,
     MatListModule,
   ]

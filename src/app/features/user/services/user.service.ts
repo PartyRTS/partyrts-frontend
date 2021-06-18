@@ -32,8 +32,14 @@ export class UserService {
     return this.http.delete<null>(`${environment.apiUrl}/api/v1/users/${userId}`);
   }
 
+  getUsersByName(search: string): Observable<User[]> {
+    const url = new URL(`${environment.apiUrl}/api/v1/users/search`);
+    url.searchParams.append('search', search);
+    return this.http.get<User[]>(url.toString());
+  }
+
   updateUserPassword(userId: number, updatePasswordRequest: UpdatePasswordRequest): Observable<null> {
-    return this.http.put<null>(environment.apiUrl + `/api/v1/users/${userId}/password`, updatePasswordRequest);
+    return this.http.put<null>(environment.apiUrl + ` / api / v1 / users /${userId}/password`, updatePasswordRequest);
   }
 
   login(loginRequest: LoginRequest): Observable<User> {

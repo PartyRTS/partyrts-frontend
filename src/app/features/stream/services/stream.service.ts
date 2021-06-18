@@ -15,4 +15,14 @@ export class StreamService {
   getAllStreams(): Observable<Stream[]> {
     return this.http.get<Stream[]>(`${environment.apiUrl}/api/v1/streams`);
   }
+
+  getStream(streamId: number): Observable<Stream> {
+    return this.http.get<Stream>(`${environment.apiUrl}/api/v1/streams/${streamId}`);
+  }
+
+  getStreamsByName(search: string): Observable<Stream[]> {
+    const url = new URL(`${environment.apiUrl}/api/v1/streams/search`);
+    url.searchParams.append('search', search);
+    return this.http.get<Stream[]>(url.toString());
+  }
 }
