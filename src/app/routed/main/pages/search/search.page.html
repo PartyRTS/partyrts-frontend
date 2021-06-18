@@ -1,0 +1,25 @@
+<div class="container">
+  <div>
+    <h2 class="mt-4 text-center">Пользователи</h2>
+    <mat-selection-list [multiple]="false" class="w-100">
+      <mat-list-option *ngFor="let user of users$ | async" routerLink="/users/{{user.idUser}}">
+        <div class="d-flex flex-row">
+          <div>
+            <img alt="friend avatar" class="rounded-circle" height="40" src="{{user.logoUrl}}" width="40">
+          </div>
+          <div class="w-auto">{{user.firstName}} {{user.secondName}}</div>
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+
+  <div>
+    <h2 class="mt-4 text-center">Стримы</h2>
+    <div class="row">
+      <app-stream-card *ngFor="let stream of streams$ | async"
+                       [streamId]="stream.idStream"
+                       [title]="stream.streamTitle">
+      </app-stream-card>
+    </div>
+  </div>
+</div>
