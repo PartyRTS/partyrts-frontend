@@ -4,9 +4,11 @@ import {User} from '../../../../features/user/models/user.model';
 import {CurrentUserService} from '../../../../features/core/services/current-user.service';
 import {UserService} from '../../../../features/user/services/user.service';
 import {ActivatedRoute} from '@angular/router';
-import {FriendRequestService} from '../../../../features/user/services/friend-request.service';
+import {UserFriendRequestService} from '../../../../features/user/services/user-friend-request.service';
 import {Video} from '../../../../features/video/models/video.model';
 import {UserVideoService} from '../../../../features/user/services/user-video.service';
+import {Playlist} from '../../../../features/playlist/models/playlist.model';
+import {UserPlaylistService} from '../../../../features/user/services/user-playlist.service';
 
 @Component({
   selector: 'app-user',
@@ -16,14 +18,16 @@ import {UserVideoService} from '../../../../features/user/services/user-video.se
 export class UserPage implements OnInit {
   user$: Observable<User>;
   videos$: Observable<Video[]>;
+  playlists$: Observable<Playlist[]>;
   userId: number;
   currentUserId: number;
 
   constructor(
     private readonly currentUserService: CurrentUserService,
     private readonly userService: UserService,
-    private readonly friendRequestService: FriendRequestService,
+    private readonly friendRequestService: UserFriendRequestService,
     private readonly userVideoService: UserVideoService,
+    private readonly userPlaylistService: UserPlaylistService,
     private readonly route: ActivatedRoute,
   ) {
   }
@@ -33,6 +37,7 @@ export class UserPage implements OnInit {
     this.currentUserId = this.currentUserService.userId;
     this.user$ = this.userService.getUser(this.userId);
     this.videos$ = this.userVideoService.getAllVideos(this.userId);
+    this.playlists$ = this.userPlaylistService.getAllPlaylists(this.userId);
   }
 
   addToFriend(): void {

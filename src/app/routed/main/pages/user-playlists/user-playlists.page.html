@@ -1,13 +1,11 @@
-<div class="container">
+<div *ngIf="user$ | async as user" class="container">
   <h1>
-    Плейлисты <a href="/">Alan Wake</a>
+    Плейлисты <a href="/users/{{user.idUser}}">{{user.firstName}} {{user.secondName}}</a>
   </h1>
   <div class="row">
-    <app-playlist-card></app-playlist-card>
-    <app-playlist-card></app-playlist-card>
-    <app-playlist-card></app-playlist-card>
-    <app-playlist-card></app-playlist-card>
-    <app-playlist-card></app-playlist-card>
-    <app-playlist-card></app-playlist-card>
+    <app-playlist-card
+      *ngFor="let playlist of playlists$ | async"
+      [playlistId]="playlist.idPlaylist">
+    </app-playlist-card>
   </div>
 </div>

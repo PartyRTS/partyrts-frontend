@@ -7,7 +7,7 @@ import {environment} from '../../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class FriendRequestService {
+export class UserFriendRequestService {
 
   constructor(private readonly http: HttpClient) {
   }

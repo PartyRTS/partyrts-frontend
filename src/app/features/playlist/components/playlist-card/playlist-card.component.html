@@ -1,5 +1,5 @@
-<div class="d-flex flex-column w-auto h-auto p-2 border">
-  <div class="flex-grow-1 p-2">Alan Wake</div>
-  <img alt="video preview" src="https://via.placeholder.com/250">
-  <div class="text-center">Dog too cool!</div>
+<div *ngIf="playlist$ | async as playlist" class="d-flex flex-column w-auto h-auto p-2 border">
+  <div *ngIf="owner$ | async as owner" class="flex-grow-1 p-2">{{owner.firstName}} {{owner.secondName}}</div>
+  <img alt="video preview" height="200px" src="{{previewUrl}}" width="300px">
+  <div class="text-center">{{playlist.title}}</div>
 </div>

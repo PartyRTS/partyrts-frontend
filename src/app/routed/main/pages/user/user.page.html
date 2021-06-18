@@ -34,8 +34,9 @@
     </div>
 
     <div class="d-flex">
-      <app-playlist-card></app-playlist-card>
-      <app-playlist-card></app-playlist-card>
+      <app-playlist-card *ngFor="let playlist of playlists$ | async"
+                         [playlistId]="playlist.idPlaylist">
+      </app-playlist-card>
     </div>
   </div>
 
@@ -51,6 +52,5 @@
       </app-video-card>
     </div>
   </div>
-
 </div>
 

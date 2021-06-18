@@ -7,6 +7,7 @@ import {CurrentUserService} from '../../../../features/core/services/current-use
 import {User} from '../../../../features/user/models/user.model';
 import {Category} from '../../../../features/stream/models/category.model';
 import {CategoryService} from '../../../../features/stream/services/category.service';
+import {UserFriendService} from '../../../../features/user/services/user-friend.service';
 
 @Component({
   selector: 'app-home',
@@ -15,20 +16,27 @@ import {CategoryService} from '../../../../features/stream/services/category.ser
 })
 export class HomePage implements OnInit {
   streams$: Observable<Stream[]>;
-  categories$: Observable<Category[]>;
   user$: BehaviorSubject<User | undefined>;
+  friends$: Observable<User[]>;
+  categories$: Observable<Category[]>;
+
+  currentUserId: number;
 
   constructor(
     private readonly streamService: StreamService,
     private readonly categoryService: CategoryService,
+    private readonly userFriendService: UserFriendService,
     private readonly currentUserService: CurrentUserService,
   ) {
   }
 
   ngOnInit(): void {
+    this.currentUserId = this.currentUserService.userId;
+
     this.categories$ = this.categoryService.getAllCategories();
-    this.streams$ = this.streamService.getAllUsers();
+    this.streams$ = this.streamService.getAllStreams();
     this.user$ = this.currentUserService.user$;
+    this.friends$ = this.userFriendService.getAllFriends(this.currentUserId);
   }
 
 }

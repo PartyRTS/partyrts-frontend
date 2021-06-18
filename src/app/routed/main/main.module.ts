@@ -19,6 +19,7 @@ import {UserFriendsPage} from './pages/user-friends/user-friends.page';
 import {SettingsPage} from './pages/settings/settings.page';
 import {RoomChatComponent} from './pages/room/components/room-chat/room-chat.component';
 import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import {MatIconModule} from '@angular/material/icon';
     FormsModule,
     SharedModule,
     VideoModule,
+    MatListModule,
   ]
 })
 export class MainModule {
