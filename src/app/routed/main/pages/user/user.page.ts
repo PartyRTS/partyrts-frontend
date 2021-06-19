@@ -9,6 +9,8 @@ import {Video} from '../../../../features/video/models/video.model';
 import {UserVideoService} from '../../../../features/user/services/user-video.service';
 import {Playlist} from '../../../../features/playlist/models/playlist.model';
 import {UserPlaylistService} from '../../../../features/user/services/user-playlist.service';
+import {MatDialog} from '@angular/material/dialog';
+import {AddStreamDialog} from '../../../../features/stream/components/add-stream/add-stream.dialog';
 
 @Component({
   selector: 'app-user',
@@ -29,6 +31,7 @@ export class UserPage implements OnInit {
     private readonly userVideoService: UserVideoService,
     private readonly userPlaylistService: UserPlaylistService,
     private readonly route: ActivatedRoute,
+    private readonly dialog: MatDialog,
   ) {
   }
 
@@ -42,5 +45,9 @@ export class UserPage implements OnInit {
 
   addToFriend(): void {
     this.friendRequestService.addFriendRequest(this.userId, this.currentUserId).subscribe();
+  }
+
+  addStream(): void {
+    const dialogRef = this.dialog.open(AddStreamDialog);
   }
 }

@@ -5,7 +5,7 @@
       <img alt="user avatar" height="200" src="{{user.logoUrl ? user.logoUrl : 'https://via.placeholder.com/200'}}"
            width="200">
 
-      <button mat-button>создать стрим</button>
+      <button (click)="addStream()" mat-button>создать стрим</button>
     </div>
 
     <div class="flex-grow-1 m-4">

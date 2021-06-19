@@ -9,6 +9,7 @@ import {MainModule} from './routed/main/main.module';
 import {UserModule} from './features/user/user.module';
 import {VideoModule} from './features/video/video.module';
 import {PlaylistModule} from './features/playlist/playlist.module';
+import {StreamModule} from './features/stream/stream.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {PlaylistModule} from './features/playlist/playlist.module';
     UserModule,
     VideoModule,
     PlaylistModule,
+    StreamModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

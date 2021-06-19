@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostBinding, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {VideoService} from '../../../video/services/video.service';
 import {PlaylistService} from '../../services/playlist.service';
@@ -16,8 +16,13 @@ export class PlaylistCardComponent implements OnInit {
   @Input()
   playlistId;
 
+  @Input()
+  selected = false;
+
   playlist$: Observable<Playlist>;
   owner$: Observable<User>;
+
+  @HostBinding('style.border') border;
 
   previewUrl: string;
 
@@ -38,6 +43,19 @@ export class PlaylistCardComponent implements OnInit {
         }
       });
     });
+  }
+
+  toggle(): boolean {
+
+    this.selected = !this.selected;
+
+    if (this.selected) {
+      this.border = '1px solid blue';
+    } else {
+      this.border = undefined;
+    }
+
+    return this.selected;
   }
 
 
