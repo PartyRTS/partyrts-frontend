@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {AdminRoutingModule} from './admin-routing.module';
 import {HomePage} from './pages/home/home.page';
+import {ChartsModule} from 'ng2-charts';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import {HomePage} from './pages/home/home.page';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    ChartsModule
   ]
 })
 export class AdminModule {

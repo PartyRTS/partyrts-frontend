@@ -52,7 +52,7 @@ export class AddPlaylistDialog implements OnInit {
     for (const videoId of this.videoCardsRefs
       .filter(item => item.selected)
       .map(video => video.videoId)) {
-      await this.playlistService.addVideo(playlist.idPlaylist, videoId);
+      await this.playlistService.addVideo(playlist.idPlaylist, videoId).toPromise();
     }
     this.dialogRef.close();
   }

@@ -31,6 +31,6 @@ export class PlaylistService {
   }
 
   addVideo(playlistId: number, videoId: number): Observable<null> {
-    return this.http.post<null>(`${environment.apiUrl}/api/v1/playlists/${playlistId}/videos`, videoId);
+    return this.http.post<null>(`${environment.apiUrl}/api/v1/playlists/${playlistId}/addVideo`, videoId);
   }
 }
