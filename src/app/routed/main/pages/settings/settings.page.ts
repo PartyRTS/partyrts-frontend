@@ -6,6 +6,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../../../features/user/services/user.service';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../../features/core/services/auth.service';
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteUserDialog} from '../../../../features/user/components/delete-user/delete-user.dialog';
 
 @Component({
   selector: 'app-settings',
@@ -23,6 +25,7 @@ export class SettingsPage implements OnInit {
     private readonly userService: UserService,
     private readonly authService: AuthService,
     private readonly router: Router,
+    private readonly dialog: MatDialog,
   ) {
     this.infoForm = new FormGroup({
       firstName: new FormControl('', Validators.required),
@@ -67,9 +70,6 @@ export class SettingsPage implements OnInit {
   }
 
   deleteAccount(): void {
-    const userId = this.currentUserService.userId;
-    this.userService.deleteUser(userId).subscribe();
-    this.authService.logout();
-    this.router.navigate(['/']);
+    this.dialog.open(DeleteUserDialog);
   }
 }
