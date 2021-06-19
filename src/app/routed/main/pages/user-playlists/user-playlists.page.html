@@ -1,7 +1,11 @@
 <div *ngIf="user$ | async as user" class="container">
-  <h1>
-    Плейлисты <a href="/users/{{user.idUser}}">{{user.firstName}} {{user.secondName}}</a>
-  </h1>
+  <div class="row">
+    <h1 class="col">
+      Плейлисты <a href="/users/{{user.idUser}}">{{user.firstName}} {{user.secondName}}</a>
+    </h1>
+    <button (click)="addPlaylist()" mat-button>Добавить плейлист</button>
+  </div>
+
   <div class="row">
     <app-playlist-card
       *ngFor="let playlist of playlists$ | async"

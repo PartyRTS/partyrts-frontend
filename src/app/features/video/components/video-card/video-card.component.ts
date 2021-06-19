@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostBinding, Input, OnInit} from '@angular/core';
 import {VideoService} from '../../services/video.service';
 import {Observable} from 'rxjs';
 import {Video} from '../../models/video.model';
@@ -13,7 +13,12 @@ import {UserService} from '../../../user/services/user.service';
 export class VideoCardComponent implements OnInit {
 
   @Input()
-  videoId;
+  videoId: number;
+
+  @Input()
+  selected = false;
+
+  @HostBinding('style.border') border;
 
   video$: Observable<Video>;
   creator$: Observable<User>;
@@ -29,6 +34,19 @@ export class VideoCardComponent implements OnInit {
     this.video$.subscribe(value => {
       this.creator$ = this.userService.getUser(value.idUser);
     });
+  }
+
+  toggle(): boolean {
+
+    this.selected = !this.selected;
+
+    if (this.selected) {
+      this.border = '1px solid blue';
+    } else {
+      this.border = undefined;
+    }
+
+    return this.selected;
   }
 
 }

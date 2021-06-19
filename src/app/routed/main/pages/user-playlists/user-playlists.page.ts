@@ -6,6 +6,8 @@ import {UserService} from '../../../../features/user/services/user.service';
 import {ActivatedRoute} from '@angular/router';
 import {Playlist} from '../../../../features/playlist/models/playlist.model';
 import {UserPlaylistService} from '../../../../features/user/services/user-playlist.service';
+import {MatDialog} from '@angular/material/dialog';
+import {AddPlaylistDialog} from '../../../../features/playlist/components/add-playlist/add-playlist.dialog';
 
 @Component({
   selector: 'app-user-playlists',
@@ -23,6 +25,7 @@ export class UserPlaylistsPage implements OnInit {
     private readonly userService: UserService,
     private readonly userPlaylistService: UserPlaylistService,
     private readonly route: ActivatedRoute,
+    private readonly dialog: MatDialog
   ) {
   }
 
@@ -34,4 +37,10 @@ export class UserPlaylistsPage implements OnInit {
   }
 
 
+  addPlaylist(): void {
+    const dialogRef = this.dialog.open(AddPlaylistDialog);
+    dialogRef.afterClosed().subscribe(() => {
+      this.playlists$ = this.userPlaylistService.getAllPlaylists(this.userId);
+    });
+  }
 }
