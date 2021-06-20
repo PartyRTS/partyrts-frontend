@@ -1,7 +1,7 @@
 import {AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {StreamMessageService} from '../../../stream/services/stream-message.service';
-import {concat, map, mergeMap, tap} from 'rxjs/operators';
+import {concat, concatMap, map, mergeMap, tap} from 'rxjs/operators';
 import {UserService} from '../../../user/services/user.service';
 import {RxStompService} from '@stomp/ng2-stompjs';
 import {NewMessage} from '../../models/new-message.model';
@@ -26,7 +26,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('messagesContainer')
   messagesContainerRef: ElementRef;
 
-  messages: Message[] = [];
+  messages: { text: string, name: string, logoUrl: string }[] = [];
   needScroll = false;
 
   constructor(
@@ -37,10 +37,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   async ngOnInit(): Promise<any> {
-    this.messages = await this.streamMessageService.getAllMessages(this.streamId).toPromise();
-
     this.getMessagesFromRest().pipe(
-      concat(this.getMessagesFromWs())
+      concat(this.getMessagesFromWs()),
+      concatMap(message => this.toExtendedMessage(message))
     ).subscribe(message => {
       this.onMessageReceived(message);
     });
@@ -98,8 +97,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.inputMessageForm.setValue('');
   }
 
-  private onMessageReceived(message: Message): void {
-    this.messages.push(message);
+  private async toExtendedMessage(message: Message): Promise<any> {
+    const user = await this.userService.getUser(message.idUser).toPromise();
+    const name = `${user.firstName} ${user.secondName}`;
+    return {text: message.text, name, logoUrl: user.logoUrl};
+  }
+
+  private onMessageReceived(extendedMessage: any): void {
+    this.messages.push(extendedMessage);
     this.needScroll = true;
   }
 
