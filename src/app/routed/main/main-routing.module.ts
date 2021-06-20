@@ -4,7 +4,7 @@ import {HomePage} from './pages/home/home.page';
 import {LoginPage} from './pages/login/login.page';
 import {RegisterPage} from './pages/register/register.page';
 import {UserPage} from './pages/user/user.page';
-import {RoomPage} from './pages/room/room.page';
+import {StreamPage} from './pages/stream/stream-page.component';
 import {UserVideosPage} from './pages/user-videos/user-videos.page';
 import {UserPlaylistsPage} from './pages/user-playlists/user-playlists.page';
 import {UserFriendsPage} from './pages/user-friends/user-friends.page';
@@ -16,15 +16,13 @@ const routes: Routes = [
   {path: 'home', component: HomePage},
   {path: 'login', component: LoginPage},
   {path: 'register', component: RegisterPage},
+  {path: 'friends', component: UserFriendsPage},
+  {path: 'settings', component: SettingsPage},
+  {path: 'search', component: SearchPage},
   {path: 'users/:id', component: UserPage},
   {path: 'users/:id/videos', component: UserVideosPage},
   {path: 'users/:id/playlists', component: UserPlaylistsPage},
-  {path: 'friends', component: UserFriendsPage},
-  {path: 'settings', component: SettingsPage},
-  {path: 'rooms/:id', component: RoomPage},
-  {path: 'search', component: SearchPage},
-
-
+  {path: 'streams/:id', component: StreamPage},
 ];
 
 @NgModule({

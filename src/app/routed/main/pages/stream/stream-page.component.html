@@ -1,0 +1,9 @@
+<div class="container-fluid row">
+  <div class="flex-grow-1">left</div>
+  <div *ngIf="currentUserId" class="col-2">
+    <app-chat
+      [streamId]="streamId"
+      [userId]="currentUserId">
+    </app-chat>
+  </div>
+</div>

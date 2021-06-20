@@ -10,6 +10,7 @@ import {UserModule} from './features/user/user.module';
 import {VideoModule} from './features/video/video.module';
 import {PlaylistModule} from './features/playlist/playlist.module';
 import {StreamModule} from './features/stream/stream.module';
+import {ChatModule} from './features/chat/chat.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {StreamModule} from './features/stream/stream.module';
     VideoModule,
     PlaylistModule,
     StreamModule,
+    ChatModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

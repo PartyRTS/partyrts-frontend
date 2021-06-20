@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {RoomPage} from './room.page';
+import {StreamPage} from './stream-page.component';
 
 describe('RoomPage', () => {
-  let component: RoomPage;
-  let fixture: ComponentFixture<RoomPage>;
+  let component: StreamPage;
+  let fixture: ComponentFixture<StreamPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RoomPage]
+      declarations: [StreamPage]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RoomPage);
+    fixture = TestBed.createComponent(StreamPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

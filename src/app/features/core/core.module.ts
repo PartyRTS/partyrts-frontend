@@ -7,6 +7,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {RouterModule} from '@angular/router';
 import {MatMenuModule} from '@angular/material/menu';
+import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from '@stomp/ng2-stompjs';
+import {myRxStompConfig} from './config/my-rx-stomp.config';
 
 
 @NgModule({
@@ -22,6 +24,17 @@ import {MatMenuModule} from '@angular/material/menu';
     MatToolbarModule,
     RouterModule,
     MatMenuModule,
+  ],
+  providers: [
+    {
+      provide: InjectableRxStompConfig,
+      useValue: myRxStompConfig,
+    },
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+      deps: [InjectableRxStompConfig],
+    },
   ]
 })
 export class CoreModule {
