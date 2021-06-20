@@ -17,8 +17,9 @@
 
   <div *ngIf="user" class="col row justify-content-end">
     <div [matMenuTriggerFor]="menu">
-      <img class="rounded-circle" height="40px" src="{{user.logoUrl ? user.logoUrl : 'https://via.placeholder.com/30'}}"
-           alt="avatar" width="40px">
+      <img alt="avatar" class="rounded-circle" height="40px"
+           src="{{user.logoUrl ? user.logoUrl : 'https://via.placeholder.com/30'}}"
+           width="40px">
     </div>
     <mat-menu #menu="matMenu">
       <button mat-menu-item routerLink="/users/{{user.idUser}}">

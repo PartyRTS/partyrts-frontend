@@ -30,19 +30,18 @@
     <div *ngIf="user$ | async">
       <h2 class="mt-4 text-center">Трансляции друзей</h2>
       <div class="row">
-        <app-stream-card></app-stream-card>
-        <app-stream-card></app-stream-card>
+
       </div>
     </div>
 
     <div>
       <h2 class="mt-4 text-center">Самые популярные трансляции(по зрителям)</h2>
       <div class="row">
-        <!--        <app-stream-card *ngFor="let stream of streams$ | async"-->
-        <!--                         [streamId]="stream.idStream"-->
-        <!--                         [title]="stream.streamTitle"-->
-        <!--                         [views]="stream.fullUsers">-->
-        <!--        </app-stream-card>-->
+        <app-stream-card *ngFor="let stream of streams$ | async"
+                         [routerLink]="'/streams/' + stream.idStream"
+                         [streamId]="stream.idStream"
+                         class="col-auto m-2">
+        </app-stream-card>
       </div>
     </div>
   </div>

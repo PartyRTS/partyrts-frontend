@@ -38,6 +38,7 @@ export class UserPage implements OnInit {
   ngOnInit(): void {
     this.userId = this.route.snapshot.params.id;
     this.currentUserId = this.currentUserService.userId;
+
     this.user$ = this.userService.getUser(this.userId);
     this.videos$ = this.userVideoService.getAllVideos(this.userId);
     this.playlists$ = this.userPlaylistService.getAllPlaylists(this.userId);

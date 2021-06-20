@@ -6,23 +6,10 @@
   </mat-form-field>
 </div>
 
-<div class="d-flex flex-row" mat-dialog-content>
-  <mat-form-field appearance="outline" class="flex-grow-1">
-    <mat-label>Название плейлиста</mat-label>
-    <input #searchForm matInput type="text">
-  </mat-form-field>
-
-  <button (click)="search(searchForm.value)" mat-button>
-    <mat-icon>search</mat-icon>
-  </button>
-</div>
-
-<div class="row select-video-container">
+<div class="row" style="width: 66vw">
   <app-video-card #videoElement (click)="select(videoElement)" *ngFor="let video of $videos | async"
                   [videoId]="video.idVideo"
-                  class="col"
-  >
-
+                  class="col-auto">
   </app-video-card>
 </div>
 

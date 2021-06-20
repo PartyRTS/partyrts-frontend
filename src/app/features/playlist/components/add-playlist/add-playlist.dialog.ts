@@ -37,10 +37,6 @@ export class AddPlaylistDialog implements OnInit {
     this.$videos = this.userVideoService.getAllVideos(this.currentUserId);
   }
 
-  search(value: string): void {
-
-  }
-
   select(videoElement: VideoCardComponent): void {
     videoElement.toggle();
   }

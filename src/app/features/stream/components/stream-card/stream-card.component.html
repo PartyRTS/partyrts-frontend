@@ -1,12 +1,12 @@
 <div *ngIf="stream$ | async as stream" class="d-flex flex-column w-auto h-auto p-2 border">
-  <div *ngIf="creator$ | async as creator" class="d-flex">
-    <img alt="user avatar" class="py-2 rounded-circle" src="${{creator.logoUrl}}">
-    <div class="flex-grow-1 p-2">{{creator.firstName}} {{creator.secondName}}</div>
-    <div class="d-flex py-2">
+  <div *ngIf="creator$ | async as creator" class="row justify-item-center">
+    <img [src]="creator.logoUrl" alt="user avatar" class="col-auto rounded-circle" height="30px" width="30px">
+    <div class="text-truncate">{{creator.firstName}} {{creator.secondName}}</div>
+    <div class="row col-auto">
       <span class="mr-2">{{stream.fullUsers}}</span>
       <mat-icon>visibility</mat-icon>
     </div>
   </div>
-  <img alt="video preview" src="https://via.placeholder.com/300x200">
+  <img alt="video preview" class="mt-2" src="https://via.placeholder.com/300x200">
   <div class="p-2 text-center">{{stream.streamTitle}}</div>
 </div>

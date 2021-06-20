@@ -38,7 +38,10 @@ export class UserPlaylistsPage implements OnInit {
 
 
   addPlaylist(): void {
-    const dialogRef = this.dialog.open(AddPlaylistDialog);
+    const dialogRef = this.dialog.open(AddPlaylistDialog, {
+      maxHeight: '90vh',
+    });
+
     dialogRef.afterClosed().subscribe(() => {
       this.playlists$ = this.userPlaylistService.getAllPlaylists(this.userId);
     });
