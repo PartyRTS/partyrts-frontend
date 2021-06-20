@@ -48,6 +48,9 @@ export class UserPage implements OnInit {
   }
 
   addStream(): void {
-    const dialogRef = this.dialog.open(AddStreamDialog);
+    this.dialog.open(AddStreamDialog, {
+      maxHeight: '90vh',
+      width: '66vw'
+    });
   }
 }

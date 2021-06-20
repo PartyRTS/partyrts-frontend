@@ -10,6 +10,8 @@ import {StreamService} from '../../services/stream.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {UserService} from '../../../user/services/user.service';
 import {Category} from '../../models/category.model';
+import {CategoryService} from '../../services/category.service';
+import {StreamCategoryService} from '../../services/stream-category.service';
 
 @Component({
   selector: 'app-add-stream',
@@ -18,35 +20,34 @@ import {Category} from '../../models/category.model';
 })
 export class AddStreamDialog implements OnInit {
 
-  streamTitleForm = new FormControl('', [Validators.required]);
-
   @ViewChildren(VideoCardComponent) videoCardsRefs: QueryList<VideoCardComponent>;
 
-  $playlists: Observable<Playlist[]>;
-  categories: Category[] = [
-    {title: 'good', idCategory: 1},
-    {title: 'bad', idCategory: 2},
-  ];
-  selectedCategories: Category[] = [];
+  streamTitleForm = new FormControl('', [Validators.required]);
+
+  playlists$: Observable<Playlist[]>;
+  categories$: Observable<Category[]>;
+
   private currentUserId: number;
-  private selectedPlaylistCard: PlaylistCardComponent;
+
+  selectedPlaylistCard: PlaylistCardComponent;
+  selectedCategoriesIds: number[] = [];
+  streamIsPrivateToggle = true;
 
   constructor(
     private readonly currentUserService: CurrentUserService,
     private readonly userService: UserService,
     private readonly userPlaylistService: UserPlaylistService,
     private readonly streamService: StreamService,
+    private readonly categoryService: CategoryService,
+    private readonly streamCategoryService: StreamCategoryService,
     private readonly dialogRef: MatDialogRef<AddStreamDialog>,
   ) {
   }
 
   ngOnInit(): void {
     this.currentUserId = this.currentUserService.userId;
-    this.$playlists = this.userPlaylistService.getAllPlaylists(this.currentUserId);
-  }
-
-  search(value: string): void {
-
+    this.playlists$ = this.userPlaylistService.getAllPlaylists(this.currentUserId);
+    this.categories$ = this.categoryService.getAllCategories();
   }
 
   select(videoElement: PlaylistCardComponent): void {
@@ -55,10 +56,24 @@ export class AddStreamDialog implements OnInit {
     this.selectedPlaylistCard = videoElement;
   }
 
-  async create(): Promise<void> {
+  buttonEnabled(): boolean {
+    if (this.selectedCategoriesIds.length === 0) {
+      return false;
+    }
+    if (!this.selectedPlaylistCard) {
+      return false;
+    }
+    return this.streamTitleForm.valid;
+  }
+
+  async addStream(): Promise<void> {
     const streamTitle = this.streamTitleForm.value;
     const idPlaylist = this.selectedPlaylistCard?.playlistId;
-    const stream = await this.streamService.addStream({streamTitle, idUser: this.currentUserId, idPlaylist}).toPromise();
+    const privateStream = this.streamIsPrivateToggle;
+    const stream = await this.streamService.addStream({streamTitle, idUser: this.currentUserId, idPlaylist, privateStream}).toPromise();
+
+    console.log(this.selectedCategoriesIds);
+    await this.streamCategoryService.addCategories(stream.idStream, this.selectedCategoriesIds).toPromise();
     this.dialogRef.close();
   }
 }

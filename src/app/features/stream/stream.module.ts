@@ -13,6 +13,7 @@ import {RouterModule} from '@angular/router';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatChipsModule,
     MatAutocompleteModule,
     MatOptionModule,
+    MatListModule,
   ]
 })
 export class StreamModule {
