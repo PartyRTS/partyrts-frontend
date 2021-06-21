@@ -22,8 +22,8 @@ export class HomePage implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
-    this.update();
+  async ngOnInit(): Promise<void> {
+    await this.update();
   }
 
   async update(): Promise<void> {
@@ -40,29 +40,24 @@ export class HomePage implements OnInit {
     this.moderators = moderators;
   }
 
-  deleteModeratorRole(userId: number): void {
-    this.userGlobalRoleService.deleteGlobalRole(userId, 3).subscribe(() => {
-      this.update();
-    });
-
+  async deleteModeratorRole(userId: number): Promise<void> {
+    await this.userGlobalRoleService.deleteGlobalRole(userId, 3).toPromise();
+    await this.update();
   }
 
-  addModeratorRole(userId: number): void {
-    this.userGlobalRoleService.addGlobalRole(userId, 3).subscribe(() => {
-      this.update();
-    });
+  async addModeratorRole(userId: number): Promise<void> {
+    await this.userGlobalRoleService.addGlobalRole(userId, 3).toPromise();
+    await this.update();
   }
 
-  banUser(userId: any): void {
-    this.userService.setBanned(userId, true).subscribe(() => {
-      this.update();
-    });
+  async banUser(userId: any): Promise<void> {
+    await this.userService.setBanned(userId, true).toPromise();
+    await this.update();
   }
 
-  unbanUser(userId: any): void {
-    this.userService.setBanned(userId, false).subscribe(() => {
-      this.update();
-    });
+  async unbanUser(userId: any): Promise<void> {
+    await this.userService.setBanned(userId, false).toPromise();
+    await this.update();
   }
 
 }
