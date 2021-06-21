@@ -9,7 +9,8 @@
   <div class="row">
     <app-playlist-card
       *ngFor="let playlist of playlists$ | async"
-      [playlistId]="playlist.idPlaylist">
+      [playlistId]="playlist.idPlaylist"
+      class="m-2">
     </app-playlist-card>
   </div>
 </div>

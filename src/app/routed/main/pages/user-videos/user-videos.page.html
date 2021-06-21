@@ -4,7 +4,8 @@
   </h1>
   <div class="row">
     <app-video-card *ngFor="let video of videos$ | async"
-                    [videoId]="video.idVideo">
+                    [videoId]="video.idVideo"
+                    class="m-2">
     </app-video-card>
   </div>
 </div>
