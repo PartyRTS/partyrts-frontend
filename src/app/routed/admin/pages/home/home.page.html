@@ -1,9 +1,93 @@
-<!--<canvas baseChart width="400" height="400"-->
-<!--        [datasets]="lineChartData"-->
-<!--        [labels]="lineChartLabels"-->
-<!--        [options]="lineChartOptions"-->
-<!--        [colors]="lineChartColors"-->
-<!--        [legend]="lineChartLegend"-->
-<!--        [chartType]="lineChartType"-->
-<!--        (chartHover)="chartHovered($event)"-->
-<!--        (chartClick)="chartClicked($event)"></canvas>-->
+<div class="row justify-content-around mt-2">
+  <div class="col-5 chart">
+    <ngx-charts-line-chart
+      [gradient]="true"
+      [results]="data"
+      [showXAxisLabel]="true"
+      [xAxisLabel]="'Количество зареистрированных пользователей'"
+      [xAxis]="true"
+      [yAxis]="true">
+    </ngx-charts-line-chart>
+  </div>
+  <div class="col-5 chart">
+    <ngx-charts-line-chart
+      [gradient]="true"
+      [results]="data"
+      [showXAxisLabel]="true"
+      [xAxisLabel]="'Кол-во авторизованных и неавторизованных зрителей на стриме'"
+      [xAxis]="true"
+      [yAxis]="true">
+    </ngx-charts-line-chart>
+  </div>
+  <div class="col-5 chart">
+    <ngx-charts-line-chart
+      [gradient]="true"
+      [results]="data"
+      [showXAxisLabel]="true"
+      [xAxisLabel]="'Кол-во  пользователей, создавших стрим'"
+      [xAxis]="true"
+      [yAxis]="true">
+    </ngx-charts-line-chart>
+  </div>
+  <div class="col-5 chart">
+    <ngx-charts-line-chart
+      [gradient]="true"
+      [results]="data"
+      [showXAxisLabel]="true"
+      [xAxisLabel]="'Кол-во предложенных голосований за стрим'"
+      [xAxis]="true"
+      [yAxis]="true">
+    </ngx-charts-line-chart>
+  </div>
+</div>
+
+
+<div class="container">
+  <h1 class="text-center w-100">Статистика</h1>
+
+  <div class="mt-4">
+    <h2>Модераторы</h2>
+
+    <div *ngFor="let moderator of moderators" class="row border p-2 mb-2">
+      <div class="col-auto">
+        <img alt="friend-request avatar" class="rounded-circle" height="40px" src="{{moderator.logoUrl}}"
+             width="40px">
+      </div>
+
+      <div class="col d-flex justify-items-center">
+        <div>{{moderator.firstName + ' ' + moderator.secondName}}</div>
+      </div>
+
+      <div class="col-auto">
+        <button (click)="deleteModeratorRole(moderator.idUser)" mat-button>Убрать из модераторов</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h2>Пользователи</h2>
+    <div>
+      <div *ngFor="let user of users" class="row border p-2 mb-2">
+        <div class="col-auto">
+          <img alt="friend-request avatar" class="rounded-circle" height="40px" src="{{user.logoUrl}}"
+               width="40px">
+        </div>
+
+        <div class="col d-flex justify-items-center">
+          <div>{{user.firstName + ' ' + user.secondName}}</div>
+        </div>
+
+        <div class="col-auto">
+          <button (click)="addModeratorRole(user.idUser)" mat-button>Назначить модератором</button>
+          <ng-container *ngIf="!user.banned">
+            <button (click)="banUser(user.idUser)" mat-button>Заблокировать</button>
+          </ng-container>
+          <ng-container *ngIf="user.banned">
+            <button (click)="unbanUser(user.idUser)" mat-button>Разблокировать</button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -24,12 +24,12 @@ export class UserService {
     return this.http.get<User>(environment.apiUrl + `/api/v1/users/${userId}`);
   }
 
-  updateUser(userId: number, updateUser: UpdateUser): Observable<null> {
-    return this.http.put<null>(environment.apiUrl + `/api/v1/users/${userId}`, updateUser);
+  updateUser(userId: number, updateUser: UpdateUser): Observable<void> {
+    return this.http.put<void>(environment.apiUrl + `/api/v1/users/${userId}`, updateUser);
   }
 
-  deleteUser(userId: number): Observable<null> {
-    return this.http.delete<null>(`${environment.apiUrl}/api/v1/users/${userId}`);
+  deleteUser(userId: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/api/v1/users/${userId}`);
   }
 
   getUsersByName(search: string): Observable<User[]> {
@@ -38,8 +38,12 @@ export class UserService {
     return this.http.get<User[]>(url.toString());
   }
 
-  updateUserPassword(userId: number, updatePasswordRequest: UpdatePasswordRequest): Observable<null> {
-    return this.http.put<null>(environment.apiUrl + ` / api / v1 / users /${userId}/password`, updatePasswordRequest);
+  updateUserPassword(userId: number, updatePasswordRequest: UpdatePasswordRequest): Observable<void> {
+    return this.http.put<void>(environment.apiUrl + ` / api / v1 / users /${userId}/password`, updatePasswordRequest);
+  }
+
+  setBanned(userId: number, banned: boolean): Observable<void> {
+    return this.http.put<void>(environment.apiUrl + `/api/v1/users/${userId}/ban`, banned);
   }
 
   login(loginRequest: LoginRequest): Observable<User> {

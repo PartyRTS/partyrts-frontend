@@ -3,7 +3,8 @@ import {CommonModule} from '@angular/common';
 
 import {AdminRoutingModule} from './admin-routing.module';
 import {HomePage} from './pages/home/home.page';
-import {ChartsModule} from 'ng2-charts';
+import {MatButtonModule} from '@angular/material/button';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {ChartsModule} from 'ng2-charts';
   imports: [
     CommonModule,
     AdminRoutingModule,
-    ChartsModule
+    MatButtonModule,
+    NgxChartsModule,
   ]
 })
 export class AdminModule {

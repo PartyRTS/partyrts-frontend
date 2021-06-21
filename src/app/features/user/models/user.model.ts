@@ -7,4 +7,5 @@ export interface User {
   registrationDate: Date;
   birthdayDate: Date;
   description: string;
+  banned: boolean;
 }
