@@ -11,6 +11,14 @@
   </div>
 
   <div class="form">
+    <button [matMenuTriggerFor]="menu" mat-button>
+      <mat-icon class="material-icons-outlined">menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" yPosition="above">
+      <button mat-menu-item>Предложить пропустить видео</button>
+      <button mat-menu-item>Предложить добавить видео</button>
+    </mat-menu>
+
     <mat-form-field class="form-input">
       <input (keyup.enter)="onSend()" [formControl]="inputMessageForm" matInput placeholder="сообщение">
     </mat-form-field>

@@ -1,6 +1,6 @@
 import {AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {StreamMessageService} from '../../../stream/services/stream-message.service';
+import {StreamMessageService} from '../../services/stream-message.service';
 import {concat, concatMap, map, mergeMap, tap} from 'rxjs/operators';
 import {UserService} from '../../../user/services/user.service';
 import {RxStompService} from '@stomp/ng2-stompjs';

@@ -14,11 +14,20 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatListModule} from '@angular/material/list';
+import {PlayerComponent} from './components/player/player.component';
+import {SuggestAddVideoDialog} from './components/suggest-add-video/suggest-add-video.dialog';
+import {SuggestSkipVideoDialog} from './components/suggest-skip-video/suggest-skip-video.dialog';
 
 
 @NgModule({
   declarations: [
-    AddStreamDialog
+    AddStreamDialog,
+    PlayerComponent,
+    SuggestAddVideoDialog,
+    SuggestSkipVideoDialog,
+  ],
+  exports: [
+    PlayerComponent,
   ],
   imports: [
     RouterModule,

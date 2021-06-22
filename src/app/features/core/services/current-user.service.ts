@@ -32,6 +32,5 @@ export class CurrentUserService {
 
   getUser(): User {
     return this.user$.value;
-    6;
   }
 }

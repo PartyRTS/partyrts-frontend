@@ -1,6 +1,28 @@
 <div class="container-fluid row">
-  <div class="flex-grow-1">left</div>
-  <div *ngIf="currentUserId" class="col-2">
+  <div class="col-9">
+    <app-player
+      *ngIf="stream"
+      [isAdmin]="stream.idUser === currentUserId"
+      [streamId]="streamId">
+    </app-player>
+
+    <div class="row justify-content-between">
+      <h3>{{stream.streamTitle}}</h3>
+      <div class="row col-auto">
+        <span class="mr-2">{{stream.fullUsers}}</span>
+        <mat-icon>visibility</mat-icon>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row">
+      <div>
+        <img alt="friend avatar" class="rounded-circle" height="40" src="{{user.logoUrl}}" width="40">
+      </div>
+      <div class="w-auto">{{user.firstName}} {{user.secondName}}</div>
+    </div>
+
+  </div>
+  <div *ngIf="currentUserId" class="col-3">
     <app-chat
       [streamId]="streamId"
       [userId]="currentUserId">

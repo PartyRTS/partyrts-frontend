@@ -16,10 +16,12 @@ import {UserVideosPage} from './pages/user-videos/user-videos.page';
 import {UserPlaylistsPage} from './pages/user-playlists/user-playlists.page';
 import {UserFriendsPage} from './pages/user-friends/user-friends.page';
 import {SettingsPage} from './pages/settings/settings.page';
-import {ChatComponent} from '../../features/chat/components/chat/chat.component';
+import {ChatComponent} from '../../features/stream/components/chat/chat.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {SearchPage} from './pages/search/search.page';
+import {StreamModule} from '../../features/stream/stream.module';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -48,6 +50,8 @@ import {SearchPage} from './pages/search/search.page';
     FormsModule,
     VideoModule,
     MatListModule,
+    StreamModule,
+    MatMenuModule,
   ]
 })
 export class MainModule {
