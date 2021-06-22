@@ -6,4 +6,6 @@ export interface Stream {
   privateStream: boolean;
   fullUsers: number;
   currentNumberVideo: number;
+  activeStream: boolean;
+  stopStream: boolean;
 }

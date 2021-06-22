@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {CurrentUserService} from '../../services/current-user.service';
-import {User} from '../../../user/models/user.model';
 import {AuthService} from '../../services/auth.service';
+import {User} from '../../../user/models/user.model';
 import {Router} from '@angular/router';
 import {SearchService} from '../../services/search.service';
+import {UserService} from '../../../user/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -14,20 +14,26 @@ export class HeaderComponent implements OnInit {
 
   user: User | undefined;
 
+  private currentUserId: number;
+
   constructor(
-    private readonly currentUserService: CurrentUserService,
     private readonly authService: AuthService,
     private readonly searchService: SearchService,
+    private readonly userService: UserService,
     private readonly router: Router,
   ) {
 
   }
 
   ngOnInit(): void {
-    this.currentUserService.user$.subscribe(value => {
-      this.user = value;
+    this.authService.authorized$.subscribe(async value => {
+      if (value) {
+        this.currentUserId = this.authService.userId;
+        this.user = await this.userService.getUser(this.currentUserId).toPromise();
+      } else {
+        this.user = undefined;
+      }
     });
-
   }
 
   logout(): void {

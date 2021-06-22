@@ -4,7 +4,7 @@ import {VideoCardComponent} from '../../../video/components/video-card/video-car
 import {Observable} from 'rxjs';
 import {Playlist} from '../../../playlist/models/playlist.model';
 import {PlaylistCardComponent} from '../../../playlist/components/playlist-card/playlist-card.component';
-import {CurrentUserService} from '../../../core/services/current-user.service';
+import {AuthService} from '../../../core/services/auth.service';
 import {UserPlaylistService} from '../../../user/services/user-playlist.service';
 import {StreamService} from '../../services/stream.service';
 import {MatDialogRef} from '@angular/material/dialog';
@@ -34,7 +34,7 @@ export class AddStreamDialog implements OnInit {
   streamIsPrivateToggle = true;
 
   constructor(
-    private readonly currentUserService: CurrentUserService,
+    private readonly authService: AuthService,
     private readonly userService: UserService,
     private readonly userPlaylistService: UserPlaylistService,
     private readonly streamService: StreamService,
@@ -45,7 +45,7 @@ export class AddStreamDialog implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUserId = this.currentUserService.userId;
+    this.currentUserId = this.authService.userId;
     this.playlists$ = this.userPlaylistService.getAllPlaylists(this.currentUserId);
     this.categories$ = this.categoryService.getAllCategories();
   }

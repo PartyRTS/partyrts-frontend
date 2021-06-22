@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {Observable} from 'rxjs';
 import {User} from '../../../../features/user/models/user.model';
-import {CurrentUserService} from '../../../../features/core/services/current-user.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../../../features/user/services/user.service';
 import {Router} from '@angular/router';
-import {AuthService} from '../../../../features/core/services/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteUserDialog} from '../../../../features/user/components/delete-user/delete-user.dialog';
+import {AuthService} from '../../../../features/core/services/auth.service';
 
 @Component({
   selector: 'app-settings',
@@ -16,12 +15,13 @@ import {DeleteUserDialog} from '../../../../features/user/components/delete-user
 })
 export class SettingsPage implements OnInit {
 
-  user$: BehaviorSubject<User | undefined>;
+  user$: Observable<User>;
   infoForm: FormGroup;
   passwordForm: FormGroup;
 
+  currentUserId: number;
+
   constructor(
-    private readonly currentUserService: CurrentUserService,
     private readonly userService: UserService,
     private readonly authService: AuthService,
     private readonly router: Router,
@@ -42,7 +42,8 @@ export class SettingsPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user$ = this.currentUserService.user$;
+    this.currentUserId = this.authService.userId;
+    this.user$ = this.userService.getUser(this.currentUserId);
 
     this.user$.subscribe(value => {
       if (!value) {
@@ -60,12 +61,12 @@ export class SettingsPage implements OnInit {
 
 
   saveInfo(): void {
-    const userId = this.currentUserService.userId;
+    const userId = this.authService.userId;
     this.userService.updateUser(userId, this.infoForm.value).subscribe();
   }
 
   savePassword(): void {
-    const userId = this.currentUserService.userId;
+    const userId = this.authService.userId;
     this.userService.updateUserPassword(userId, this.passwordForm.value).subscribe();
   }
 

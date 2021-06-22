@@ -30,7 +30,7 @@ export class RegisterPage implements OnInit {
   ngOnInit(): void {
   }
 
-  onRegisterButtonClick(): void {
+  async onRegisterButtonClick(): Promise<void> {
     console.log(this.form);
     const firstName = this.form.value.firstName;
     const secondName = this.form.value.secondName;
@@ -40,13 +40,11 @@ export class RegisterPage implements OnInit {
     const password = this.form.value.password;
     // const passwordAgain = this.form.value.passwordAgain;
 
-    this.authService.register({firstName, secondName, email, birthdayDate, description, password}).subscribe(
-      () => {
-        this.route.navigate(['/']);
-      },
-      error => {
-        alert('oops! error:' + error);
-      }
-    );
+    try {
+      await this.authService.register({firstName, secondName, email, birthdayDate, description, password});
+      await this.route.navigate(['/']);
+    } catch (err) {
+      alert('oops! error:' + err);
+    }
   }
 }

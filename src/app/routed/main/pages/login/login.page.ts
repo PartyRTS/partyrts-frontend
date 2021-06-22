@@ -25,19 +25,16 @@ export class LoginPage implements OnInit {
   ngOnInit(): void {
   }
 
-  onLoginButtonClick(): void {
+  async onLoginButtonClick(): Promise<void> {
     console.log(this.form);
     const email = this.form.value.email;
     const password = this.form.value.password;
 
-    this.authService.login({email, password}).subscribe(
-      () => {
-        this.route.navigate(['/']);
-      },
-      error => {
-        // FIXME
-        alert('oops! error:' + error);
-      }
-    );
+    await this.authService.login({email, password});
+    try {
+      await this.route.navigate(['/']);
+    } catch (err) {
+      alert('oops! error:' + err);
+    }
   }
 }

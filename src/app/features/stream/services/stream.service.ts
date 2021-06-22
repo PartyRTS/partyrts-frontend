@@ -4,6 +4,7 @@ import {Stream} from '../models/stream.model';
 import {environment} from '../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {NewStream} from '../models/new-stream.model';
+import {Video} from '../../video/models/video.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,10 @@ export class StreamService {
 
   getStream(streamId: number): Observable<Stream> {
     return this.http.get<Stream>(`${environment.apiUrl}/api/v1/streams/${streamId}`);
+  }
+
+  getVideos(streamId: number): Observable<Video[]> {
+    return this.http.get<Video[]>(`${environment.apiUrl}/api/v1/streams/${streamId}/fullPlaylist`);
   }
 
   getStreamsByName(search: string): Observable<Stream[]> {

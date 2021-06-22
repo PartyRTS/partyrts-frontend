@@ -1,7 +1,6 @@
-<div class="container-fluid row">
+<div *ngIf="stream" class="container-fluid row">
   <div class="col-9">
     <app-player
-      *ngIf="stream"
       [isAdmin]="stream.idUser === currentUserId"
       [streamId]="streamId">
     </app-player>

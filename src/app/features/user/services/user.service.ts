@@ -3,8 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {User} from '../models/user.model';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
-import {NewUser} from '../models/new-user.model';
-import {LoginRequest} from '../models/login-request.model';
 import {UpdateUser} from '../models/update-user.model';
 import {UpdatePasswordRequest} from '../models/update-password-request.model';
 
@@ -44,13 +42,5 @@ export class UserService {
 
   setBanned(userId: number, banned: boolean): Observable<void> {
     return this.http.put<void>(environment.apiUrl + `/api/v1/users/${userId}/ban`, banned);
-  }
-
-  login(loginRequest: LoginRequest): Observable<User> {
-    return this.http.post<User>(environment.apiUrl + `/api/v1/users/login`, loginRequest);
-  }
-
-  register(newUser: NewUser): Observable<User> {
-    return this.http.post<User>(environment.apiUrl + `/api/v1/users/register`, newUser);
   }
 }

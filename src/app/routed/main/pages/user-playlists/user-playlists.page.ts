@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {User} from '../../../../features/user/models/user.model';
-import {CurrentUserService} from '../../../../features/core/services/current-user.service';
+import {AuthService} from '../../../../features/core/services/auth.service';
 import {UserService} from '../../../../features/user/services/user.service';
 import {ActivatedRoute} from '@angular/router';
 import {Playlist} from '../../../../features/playlist/models/playlist.model';
@@ -21,7 +21,7 @@ export class UserPlaylistsPage implements OnInit {
   currentUserId: number;
 
   constructor(
-    private readonly currentUserService: CurrentUserService,
+    private readonly authService: AuthService,
     private readonly userService: UserService,
     private readonly userPlaylistService: UserPlaylistService,
     private readonly route: ActivatedRoute,
@@ -31,7 +31,7 @@ export class UserPlaylistsPage implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.params.id;
-    this.currentUserId = this.currentUserService.userId;
+    this.currentUserId = this.authService.userId;
     this.user$ = this.userService.getUser(this.userId);
     this.playlists$ = this.userPlaylistService.getAllPlaylists(this.userId);
   }

@@ -1,5 +1,5 @@
 import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {CurrentUserService} from '../../../core/services/current-user.service';
+import {AuthService} from '../../../core/services/auth.service';
 import {UserService} from '../../../user/services/user.service';
 import {UserVideoService} from '../../../user/services/user-video.service';
 import {Observable} from 'rxjs';
@@ -24,7 +24,7 @@ export class AddPlaylistDialog implements OnInit {
   private currentUserId: number;
 
   constructor(
-    private readonly currentUserService: CurrentUserService,
+    private readonly authService: AuthService,
     private readonly userService: UserService,
     private readonly userVideoService: UserVideoService,
     private readonly playlistService: PlaylistService,
@@ -33,7 +33,7 @@ export class AddPlaylistDialog implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUserId = this.currentUserService.userId;
+    this.currentUserId = this.authService.userId;
     this.$videos = this.userVideoService.getAllVideos(this.currentUserId);
   }
 

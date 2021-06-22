@@ -1,14 +1,17 @@
-import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {RxStompService} from '@stomp/ng2-stompjs';
 import Hls from 'hls.js';
 import {StreamService} from '../../services/stream.service';
+import {AuthService} from '../../../core/services/auth.service';
+import {Stream} from '../../models/stream.model';
+import {Video} from '../../../video/models/video.model';
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss']
 })
-export class PlayerComponent implements AfterViewInit {
+export class PlayerComponent implements OnInit, AfterViewInit {
 
 
   @ViewChild('player')
@@ -18,33 +21,61 @@ export class PlayerComponent implements AfterViewInit {
   @Input()
   isAdmin: boolean;
 
-  playerLoaded = false;
+  stream: Stream;
+  playlist: Video[];
+  currentUserId: number;
 
   constructor(
     private readonly streamService: StreamService,
+    private readonly authService: AuthService,
     private readonly rxStompService: RxStompService
   ) {
   }
 
-  async ngAfterViewInit(): Promise<void> {
-    await this.initPlayer();
-    await this.connect();
+  ngOnInit(): void {
+    this.currentUserId = this.authService.userId;
   }
 
-  async initPlayer(): Promise<void> {
-    if (Hls.isSupported()) {
+  async ngAfterViewInit(): Promise<void> {
+    this.stream = await this.streamService.getStream(this.streamId).toPromise();
+
+    if (!this.stream.activeStream) {
+      // TODO
+      return;
+    }
+
+    this.playlist = await this.streamService.getVideos(this.streamId).toPromise();
+
+    await this.initPlayer();
+    await this.connect(); // disconnect?
+    if (this.isAdmin) {
+      this.sendStartVideoEvent();
+    } else {
+      this.sendEvent({type: 'join', userId: this.currentUserId});
+    }
+    this.sendNextVideoEvent();
+  }
+
+  initPlayer(): Promise<void> {
+    return new Promise(async (resolve, reject) => {
+      if (!Hls.isSupported()) {
+        alert('oops! плеер не поддерживается!');
+        reject();
+      }
       const hls = new Hls();
       hls.loadSource(await this.getVideoUrl());
       hls.attachMedia(this.playerRef?.nativeElement);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => this.playerRef?.nativeElement.play());  // FIXME?
-      this.playerLoaded = true;
-    } else {
-      alert('hls is not supported');
-    }
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        resolve();
+      });
+    });
   }
 
   async getVideoUrl(): Promise<string> {
-    return 'https://videousersbucket.s3.us-west-2.amazonaws.com/1/sintel.m3u8';
+    if (this.playlist.length === 0) {
+      // Todo
+    }
+    return this.playlist[0].videoUrl;
   }
 
   connect(): void {
@@ -54,7 +85,6 @@ export class PlayerComponent implements AfterViewInit {
     this.rxStompService.watch(topic).subscribe(message => {
       this.onMessageReceived(JSON.parse(message.body));
     });
-    this.sendMessage({type: 'join'});
   }
 
   onMessageReceived(message): void {
@@ -66,7 +96,7 @@ export class PlayerComponent implements AfterViewInit {
       if (this.isAdmin) {
         const status = this.playerRef?.nativeElement.paused ? 'paused' : 'played';
         const data = {type: 'info', status, time: this.playerRef?.nativeElement.currentTime};
-        this.sendMessage(data);
+        this.sendEvent(data);
       }
     }
     if (message.type === 'status') {
@@ -86,10 +116,24 @@ export class PlayerComponent implements AfterViewInit {
     }
   }
 
-  sendMessage(message): void {
+  sendEvent(message): void {
     console.log('sendMessage');
     console.log(message);
     const topic = `/topic/streams/${this.streamId}/events`;
     this.rxStompService.publish({destination: topic, body: JSON.stringify(message)});
   }
+
+  sendStartVideoEvent(): void {
+    console.log('sendStartVideoEvent');
+    const topic = `/app/streams/${this.streamId}/start`;
+    this.rxStompService.publish({destination: topic});
+  }
+
+  sendNextVideoEvent(): void {
+    console.log('sendNextVideoEvent');
+    const topic = `/app/streams/${this.streamId}/next`;
+    this.rxStompService.publish({destination: topic});
+  }
+
+
 }

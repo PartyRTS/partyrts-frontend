@@ -3,7 +3,7 @@ import {UserVideoService} from '../../../../features/user/services/user-video.se
 import {Observable} from 'rxjs';
 import {Video} from '../../../../features/video/models/video.model';
 import {ActivatedRoute} from '@angular/router';
-import {CurrentUserService} from '../../../../features/core/services/current-user.service';
+import {AuthService} from '../../../../features/core/services/auth.service';
 import {UserService} from '../../../../features/user/services/user.service';
 import {User} from '../../../../features/user/models/user.model';
 
@@ -19,7 +19,7 @@ export class UserVideosPage implements OnInit {
   currentUserId: number;
 
   constructor(
-    private readonly currentUserService: CurrentUserService,
+    private readonly authService: AuthService,
     private readonly userService: UserService,
     private readonly userVideoService: UserVideoService,
     private readonly route: ActivatedRoute,
@@ -28,7 +28,7 @@ export class UserVideosPage implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.params.id;
-    this.currentUserId = this.currentUserService.userId;
+    this.currentUserId = this.authService.userId;
     this.user$ = this.userService.getUser(this.userId);
     this.videos$ = this.userVideoService.getAllVideos(this.userId);
   }

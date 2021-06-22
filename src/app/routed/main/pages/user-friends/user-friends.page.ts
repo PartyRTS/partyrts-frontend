@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../../../features/user/models/user.model';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {CurrentUserService} from '../../../../features/core/services/current-user.service';
+import {Observable} from 'rxjs';
+import {AuthService} from '../../../../features/core/services/auth.service';
 import {UserFriendRequestService} from '../../../../features/user/services/user-friend-request.service';
 import {UserService} from '../../../../features/user/services/user.service';
 import {UserFriendService} from '../../../../features/user/services/user-friend.service';
@@ -12,13 +12,13 @@ import {UserFriendService} from '../../../../features/user/services/user-friend.
   styleUrls: ['./user-friends.page.scss']
 })
 export class UserFriendsPage implements OnInit {
-  user$: BehaviorSubject<User | undefined>;
+  user$: Observable<User>;
   subscribers$: Observable<User[]>;
   friends$: Observable<User[]>;
   currentUserId: number;
 
   constructor(
-    readonly currentUserService: CurrentUserService,
+    readonly authService: AuthService,
     readonly friendRequestService: UserFriendRequestService,
     readonly userService: UserService,
     readonly userFriendService: UserFriendService,
@@ -26,8 +26,8 @@ export class UserFriendsPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user$ = this.currentUserService.user$;
-    this.currentUserId = this.currentUserService.userId;
+    this.currentUserId = this.authService.userId;
+    this.user$ = this.userService.getUser(this.currentUserId);
     this.subscribers$ = this.friendRequestService.getAllFriendRequests(this.currentUserId);
     this.friends$ = this.userFriendService.getAllFriends(this.currentUserId);
   }
