@@ -1,43 +1,43 @@
 <div class="row justify-content-around mt-2">
   <div class="col-5 chart">
-    <ngx-charts-line-chart
+    <ngx-charts-bar-vertical
       [gradient]="true"
-      [results]="data"
+      [results]="registerUser"
       [showXAxisLabel]="true"
-      [xAxisLabel]="'Количество зареистрированных пользователей'"
+      [xAxisLabel]="'Количество зарегистрированных пользователей'"
       [xAxis]="true"
       [yAxis]="true">
-    </ngx-charts-line-chart>
+    </ngx-charts-bar-vertical>
   </div>
   <div class="col-5 chart">
-    <ngx-charts-line-chart
+    <ngx-charts-bar-vertical
       [gradient]="true"
-      [results]="data"
+      [results]="usersOnStream"
       [showXAxisLabel]="true"
       [xAxisLabel]="'Кол-во авторизованных и неавторизованных зрителей на стриме'"
       [xAxis]="true"
       [yAxis]="true">
-    </ngx-charts-line-chart>
+    </ngx-charts-bar-vertical>
   </div>
   <div class="col-5 chart">
-    <ngx-charts-line-chart
+    <ngx-charts-bar-vertical
       [gradient]="true"
-      [results]="data"
+      [results]="countStreams"
       [showXAxisLabel]="true"
       [xAxisLabel]="'Кол-во  пользователей, создавших стрим'"
       [xAxis]="true"
       [yAxis]="true">
-    </ngx-charts-line-chart>
+    </ngx-charts-bar-vertical>
   </div>
   <div class="col-5 chart">
-    <ngx-charts-line-chart
+    <ngx-charts-bar-vertical
       [gradient]="true"
-      [results]="data"
+      [results]="votesOnStream"
       [showXAxisLabel]="true"
       [xAxisLabel]="'Кол-во предложенных голосований за стрим'"
       [xAxis]="true"
       [yAxis]="true">
-    </ngx-charts-line-chart>
+    </ngx-charts-bar-vertical>
   </div>
 </div>
 
