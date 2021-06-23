@@ -108,8 +108,8 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     console.log('update stream: ', this.stream);
     this.playlist = await this.streamService.getVideos(this.streamId).toPromise();
     console.log('update playlist: ', this.playlist);
-    const videoId = this.stream.currentNumberVideo;
-    this.currentVideo = await this.videoService.getVideo(videoId).toPromise();
+    const videoNumber = this.stream.currentNumberVideo;
+    this.currentVideo = this.playlist[videoNumber];
     console.log('update current video: ', this.currentVideo);
   }
 
