@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../../features/core/services/auth.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginPage implements OnInit {
   constructor(
     private readonly route: Router,
     private readonly authService: AuthService,
+    private readonly snackbar: MatSnackBar,
   ) {
     this.form = new FormGroup({
       email: new FormControl('', Validators.required),
@@ -30,11 +32,13 @@ export class LoginPage implements OnInit {
     const email = this.form.value.email;
     const password = this.form.value.password;
 
-    await this.authService.login({email, password});
     try {
+      await this.authService.login({email, password});
       await this.route.navigate(['/']);
     } catch (err) {
-      alert('oops! error:' + err);
+      this.snackbar.open('Ооопс... ошибка входа в аккаунт', 'ок', {
+        duration: 3000
+      });
     }
   }
 }
