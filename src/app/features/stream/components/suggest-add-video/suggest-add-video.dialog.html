@@ -1,1 +1,17 @@
-<p>suggest-add-video works!</p>
+<h1 mat-dialog-title>Предложить видео</h1>
+<div mat-dialog-content>
+
+  <h2>Видео</h2>
+
+  <div class="row">
+    <app-video-card #playlistElement (click)="select(playlistElement)" *ngFor="let video of videos"
+                    [videoId]="video.idVideo"
+                    class="col-auto">
+    </app-video-card>
+  </div>
+
+</div>
+
+<div mat-dialog-actions>
+  <button (click)="addStream()" [disabled]="!buttonEnabled()" mat-button>Предложить видео</button>
+</div>
