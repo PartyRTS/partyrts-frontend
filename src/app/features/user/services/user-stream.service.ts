@@ -15,4 +15,8 @@ export class UserStreamService {
   getAllStreams(userId: number): Observable<Stream[]> {
     return this.http.get<Stream[]>(`${environment.apiUrl}/api/v1/users/${userId}/streams`);
   }
+
+  getActiveStream(userId: number): Observable<Stream | undefined> {
+    return this.http.get<Stream | undefined>(`${environment.apiUrl}/api/v1/users/${userId}/activeStream`);
+  }
 }

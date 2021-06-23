@@ -27,16 +27,16 @@ export class StreamPage implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.streamId = this.route.snapshot.params.id;
     this.currentUserId = this.authService.userId;
 
-    this.streamService.getStream(this.streamId).subscribe(stream => {
-      this.stream = stream;
-    });
+    await this.streamService.addWatcher(this.streamId).toPromise();
+    if (this.currentUserId) {
+      await this.streamService.addAuthorizedWatcher(this.streamId, this.currentUserId).toPromise();
+    }
 
-    this.userService.getUser(this.currentUserId).subscribe(user => {
-      this.currentUser = user;
-    });
+    this.stream = await this.streamService.getStream(this.streamId).toPromise();
+    this.currentUser = await this.userService.getUser(this.currentUserId).toPromise();
   }
 }

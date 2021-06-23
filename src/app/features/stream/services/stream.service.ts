@@ -35,4 +35,12 @@ export class StreamService {
     url.searchParams.append('search', search);
     return this.http.get<Stream[]>(url.toString());
   }
+
+  addWatcher(streamId: number): Observable<void> {
+    return this.http.put<void>(`${environment.apiUrl}/api/v1/streams/${streamId}/addWatcher`, null);
+  }
+
+  addAuthorizedWatcher(streamId: number, userId: number): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/api/v1/streams/${streamId}/addWatcher/${userId}`, null);
+  }
 }

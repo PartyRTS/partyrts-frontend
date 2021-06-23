@@ -11,6 +11,8 @@ import {Playlist} from '../../../../features/playlist/models/playlist.model';
 import {UserPlaylistService} from '../../../../features/user/services/user-playlist.service';
 import {MatDialog} from '@angular/material/dialog';
 import {AddStreamDialog} from '../../../../features/stream/components/add-stream/add-stream.dialog';
+import {Stream} from '../../../../features/stream/models/stream.model';
+import {UserStreamService} from '../../../../features/user/services/user-stream.service';
 
 @Component({
   selector: 'app-user',
@@ -21,6 +23,7 @@ export class UserPage implements OnInit {
   user$: Observable<User>;
   videos$: Observable<Video[]>;
   playlists$: Observable<Playlist[]>;
+  activeStream$: Observable<Stream | undefined>;
   userId: number;
   currentUserId: number;
 
@@ -30,6 +33,7 @@ export class UserPage implements OnInit {
     private readonly friendRequestService: UserFriendRequestService,
     private readonly userVideoService: UserVideoService,
     private readonly userPlaylistService: UserPlaylistService,
+    private readonly userStreamService: UserStreamService,
     private readonly route: ActivatedRoute,
     private readonly dialog: MatDialog,
   ) {
@@ -38,10 +42,12 @@ export class UserPage implements OnInit {
   ngOnInit(): void {
     this.userId = this.route.snapshot.params.id;
     this.currentUserId = this.authService.userId;
-
+    console.log(this.userId);
+    console.log(this.currentUserId);
     this.user$ = this.userService.getUser(this.userId);
     this.videos$ = this.userVideoService.getAllVideos(this.userId);
     this.playlists$ = this.userPlaylistService.getAllPlaylists(this.userId);
+    this.activeStream$ = this.userStreamService.getActiveStream(this.userId);
   }
 
   addToFriend(): void {
