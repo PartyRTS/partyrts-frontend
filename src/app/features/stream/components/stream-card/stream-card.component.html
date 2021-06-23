@@ -1,9 +1,11 @@
 <div *ngIf="stream$ | async as stream" class="d-flex flex-column w-auto h-auto p-2 border">
-  <div *ngIf="creator$ | async as creator" class="row justify-item-center">
-    <img [src]="creator.logoUrl" alt="user avatar" class="col-auto rounded-circle" height="30px" width="30px">
-    <div class="text-truncate">{{creator.firstName}} {{creator.secondName}}</div>
-    <div class="row col-auto">
-      <span class="mr-2">{{stream.fullUsers}}</span>
+  <div *ngIf="creator$ | async as creator" class="d-flex flex-row">
+    <div class="d-flex flex-row flex-grow-1">
+      <img [src]="creator.logoUrl" alt="user avatar" class="col-auto rounded-circle" height="30px" width="30px">
+      <div class="flex-grow-1 text-truncate">{{creator.firstName}} {{creator.secondName}}</div>
+    </div>
+    <div class="d-flex flex-row">
+      <span>{{stream.fullUsers}}</span>
       <mat-icon>visibility</mat-icon>
     </div>
   </div>
