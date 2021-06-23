@@ -8,6 +8,7 @@ import {Category} from '../../../../features/stream/models/category.model';
 import {CategoryService} from '../../../../features/stream/services/category.service';
 import {UserFriendService} from '../../../../features/user/services/user-friend.service';
 import {UserService} from '../../../../features/user/services/user.service';
+import {UserStreamService} from '../../../../features/user/services/user-stream.service';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ import {UserService} from '../../../../features/user/services/user.service';
 })
 export class HomePage implements OnInit {
   popularActiveStreams: Stream[];
+  friendActiveStreams: Stream[];
   user: User;
   friends: User[];
   categories: Category[];
@@ -26,6 +28,7 @@ export class HomePage implements OnInit {
     private readonly streamService: StreamService,
     private readonly categoryService: CategoryService,
     private readonly userFriendService: UserFriendService,
+    private readonly userStreamService: UserStreamService,
     private readonly authService: AuthService,
     private readonly userService: UserService,
   ) {
@@ -36,6 +39,16 @@ export class HomePage implements OnInit {
     if (this.currentUserId) {
       this.user = await this.userService.getUser(this.currentUserId).toPromise();
       this.friends = await this.userFriendService.getAllFriends(this.currentUserId).toPromise();
+
+      const friendActiveStreams = [];
+
+      for (const friend of this.friends) {
+        const stream = await this.userStreamService.getActiveStream(friend.idUser).toPromise();
+        if (stream?.activeStream) {
+          friendActiveStreams.push(stream);
+        }
+      }
+      this.friendActiveStreams = friendActiveStreams;
     }
     this.categories = await this.categoryService.getAllCategories().toPromise();
 
@@ -43,6 +56,8 @@ export class HomePage implements OnInit {
     this.popularActiveStreams = streams
       .filter(stream => stream.activeStream)
       .sort((a, b) => a.fullUsers > b.fullUsers ? -1 : 1);
+
+
   }
 
 }
