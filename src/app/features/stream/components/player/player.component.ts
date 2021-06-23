@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {RxStompService} from '@stomp/ng2-stompjs';
 import Hls from 'hls.js';
 import {StreamService} from '../../services/stream.service';
@@ -6,6 +6,8 @@ import {AuthService} from '../../../core/services/auth.service';
 import {Stream} from '../../models/stream.model';
 import {Video} from '../../../video/models/video.model';
 import {Router} from '@angular/router';
+import {VideoService} from '../../../video/services/video.service';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-player',
@@ -14,18 +16,22 @@ import {Router} from '@angular/router';
 })
 export class PlayerComponent implements OnInit, AfterViewInit {
 
-
   @ViewChild('player')
   playerRef;
   @Input()
   streamId: number;
   @Input()
   isAdmin: boolean;
+  @Output()
+  streamEnded: BehaviorSubject<boolean>;
 
   stream: Stream;
   playlist: Video[];
+  currentVideo: Video;
+
   currentUserId: number;
 
+  // player states
   playerLoaded = false;
   playerStarted = false;
 
@@ -33,8 +39,10 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     private readonly streamService: StreamService,
     private readonly authService: AuthService,
     private readonly rxStompService: RxStompService,
+    private readonly videoService: VideoService,
     private readonly router: Router,
   ) {
+    this.streamEnded = new BehaviorSubject<boolean>(false);
   }
 
   ngOnInit(): void {
@@ -47,7 +55,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     console.log(this.stream);
 
     if (!this.stream.activeStream) {
-      // TODO
+      this.streamEnded.next(true);
       return;
     }
 
@@ -74,18 +82,19 @@ export class PlayerComponent implements OnInit, AfterViewInit {
       } else {
         this.playerRef.nativeElement.play();
       }
-      this.sendEvent({type: 'join', userId: this.currentUserId});
+      this.sendJoinEvent();
     }
   }
 
-  initPlayer(): Promise<void> {
+  async initPlayer(): Promise<void> {
+    await this.updateAll();
     return new Promise(async (resolve, reject) => {
       if (!Hls.isSupported()) {
         alert('oops! player not supported!');
         reject();
       }
       const hls = new Hls();
-      hls.loadSource(await this.getVideoUrl());
+      hls.loadSource(this.currentVideo.videoUrl);
       hls.attachMedia(this.playerRef?.nativeElement);
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         console.log('video manifest loaded');
@@ -94,12 +103,14 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     });
   }
 
-  async getVideoUrl(): Promise<string> {
-    if (this.playlist.length === 0) {
-      // todo
-      return;
-    }
-    return this.playlist[this.stream.currentNumberVideo - 1].videoUrl;
+  async updateAll(): Promise<void> {
+    this.stream = await this.streamService.getStream(this.streamId).toPromise();
+    console.log('update stream: ', this.stream);
+    this.playlist = await this.streamService.getVideos(this.streamId).toPromise();
+    console.log('update playlist: ', this.playlist);
+    const videoId = this.stream.currentNumberVideo;
+    this.currentVideo = await this.videoService.getVideo(videoId).toPromise();
+    console.log('update current video: ', this.currentVideo);
   }
 
   connect(): void {
@@ -139,21 +150,23 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     }
     if (message.type === 'next') {
       this.playerRef.nativeElement.pause();
+      await this.updateAll();
 
-      this.stream = await this.streamService.getStream(this.streamId).toPromise();
-      console.log('update stream: ', this.stream);
-      this.playlist = await this.streamService.getVideos(this.streamId).toPromise();
-      console.log('update playlist: ', this.playlist);
-
-      if (this.playlist.length === 0) {
+      if (!this.stream.activeStream) {
+        this.streamEnded.next(true);
         return;
       }
+
       const hls = new Hls();
-      hls.loadSource(this.playlist[this.stream.currentNumberVideo - 1].videoUrl);
+      hls.loadSource(this.currentVideo.videoUrl);
       hls.attachMedia(this.playerRef?.nativeElement);
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         this.playerRef.nativeElement.play();
       });
+    }
+
+    if (message.type === 'vote') {
+      await this.updateAll();
     }
   }
 

@@ -1,4 +1,18 @@
 <div class="chat">
+
+  <div *ngIf="vote">
+    <ng-container *ngIf="vote.idVoteSkips">
+      <div>Пропустить видео?</div>
+    </ng-container>
+    <ng-container *ngIf="vote.idVoteAdds">
+      <div>Добавить видео?</div>
+    </ng-container>
+    <div>
+      <button (click)="addUserVote(true)" mat-button>За</button>
+      <button (click)="addUserVote(false)" mat-button>Против</button>
+    </div>
+  </div>
+
   <div #messagesContainer class="messages">
     <div *ngFor="let message of messages" class="message">
       <div class="message-content">
@@ -15,8 +29,8 @@
       <mat-icon class="material-icons-outlined">menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu" yPosition="above">
-      <button mat-menu-item>Предложить пропустить видео</button>
-      <button mat-menu-item>Предложить добавить видео</button>
+      <button (click)="openAddVoteSkipDialog()" mat-menu-item>Предложить пропустить видео</button>
+      <button (click)="openAddVoteAddDialog()" mat-menu-item>Предложить добавить видео</button>
     </mat-menu>
 
     <mat-form-field class="form-input">

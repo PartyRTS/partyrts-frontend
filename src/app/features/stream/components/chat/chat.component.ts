@@ -7,6 +7,14 @@ import {RxStompService} from '@stomp/ng2-stompjs';
 import {NewMessage} from '../../models/new-message.model';
 import {from, Observable} from 'rxjs';
 import {Message} from '../../models/message.model';
+import {MatDialog} from '@angular/material/dialog';
+import {SuggestSkipVideoDialog} from '../suggest-skip-video/suggest-skip-video.dialog';
+import {SuggestAddVideoDialog} from '../suggest-add-video/suggest-add-video.dialog';
+import {Vote} from '../../models/vote.model';
+import {StreamVoteService} from '../../services/stream-vote.service';
+import {VoteService} from '../../services/vote.service';
+import {NewUserVote} from '../../models/new-user-vote.model';
+import {AuthService} from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-chat',
@@ -15,24 +23,28 @@ import {Message} from '../../models/message.model';
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
 
+  @ViewChild('messagesContainer')
+  messagesContainerRef: ElementRef;
   @Input()
   public streamId: number;
-
   @Input()
   public userId: number;
 
   inputMessageForm = new FormControl();
 
-  @ViewChild('messagesContainer')
-  messagesContainerRef: ElementRef;
+  vote: Vote;
 
   messages: { text: string, name: string, logoUrl: string }[] = [];
   needScroll = false;
 
   constructor(
+    private readonly authService: AuthService,
     private readonly streamMessageService: StreamMessageService,
     private readonly userService: UserService,
+    private readonly streamVoteService: StreamVoteService,
+    private readonly voteService: VoteService,
     private readonly rxStompService: RxStompService,
+    private readonly dialog: MatDialog,
   ) {
   }
 
@@ -42,6 +54,18 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       concatMap(message => this.toExtendedMessage(message))
     ).subscribe(message => {
       this.onMessageReceived(message);
+    });
+
+    this.vote = await this.streamVoteService.getActiveVote(this.streamId).toPromise();
+
+    this.rxStompService.watch(`/topic/streams/${this.streamId}/events`).subscribe(message => {
+      const event = JSON.parse(message.body);
+      console.log(event);
+      if (event.type === 'vote') {
+        this.streamVoteService.getActiveVote(this.streamId).subscribe(value => {
+          this.vote = value;
+        });
+      }
     });
   }
 
@@ -108,4 +132,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.needScroll = true;
   }
 
+  openAddVoteSkipDialog(): void {
+    this.dialog.open(SuggestSkipVideoDialog);
+  }
+
+  openAddVoteAddDialog(): void {
+    this.dialog.open(SuggestAddVideoDialog);
+  }
+
+  addUserVote(vote: boolean): void {
+    const newUserVote: NewUserVote = {idUser: this.authService.userId, votePlus: vote};
+    this.voteService.addUserVote(this.vote.idVote, newUserVote).subscribe();
+  }
 }

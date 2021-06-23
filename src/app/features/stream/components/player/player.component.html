@@ -1,1 +1,10 @@
-<video #player (click)="onStartButtonClicked()" (ended)="onEnded()"></video>
+<div class="d-flex flex-column">
+  <video #player (click)="onStartButtonClicked()" (ended)="onEnded()"></video>
+  <div class="row w-100 ml-1">
+    <div *ngFor="let video of playlist">
+      <img alt="" class="m-1" height="134" src="{{video.previewUrl}}" width="200">
+      <div class="text-center">{{video.title}}</div>
+    </div>
+  </div>
+</div>
+
