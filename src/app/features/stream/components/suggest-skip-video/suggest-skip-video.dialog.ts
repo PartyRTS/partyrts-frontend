@@ -28,9 +28,8 @@ export class SuggestSkipVideoDialog implements OnInit {
   }
 
   async onClick(): Promise<void> {
-    const videos = await this.streamService.getVideos(this.streamId).toPromise();
-    const lastVideoNumber = videos.length - 1;
-    const newVoteSkip: NewVoteSkip = {numberSkipVideo: lastVideoNumber};
+    const stream = await this.streamService.getStream(this.streamId).toPromise();
+    const newVoteSkip: NewVoteSkip = {numberSkipVideo: stream.currentNumberVideo};
     await this.streamVoteService.addVoteSkip(this.streamId, newVoteSkip).toPromise();
     this.dialogRef.close();
   }
