@@ -1,11 +1,11 @@
 <div class="container-fluid row">
   <div class="col-2">
 
-    <div *ngIf="user$ | async" class="my-2">
+    <div *ngIf="user" class="my-2">
       <div class="ml-2 my-3 menu-list-header">Друзья</div>
 
       <mat-selection-list [multiple]="false" class="w-100">
-        <mat-list-option *ngFor="let friend of friends$ | async" routerLink="/users/{{friend.idUser}}">
+        <mat-list-option *ngFor="let friend of friends" routerLink="/users/{{friend.idUser}}">
           <div class="d-flex flex-row">
             <div>
               <img alt="friend avatar" class="rounded-circle" height="40" src="{{friend.logoUrl}}" width="40">
@@ -19,7 +19,7 @@
     <div class="my-2">
       <div class="ml-2 my-3 menu-list-header">Популярные категории</div>
       <div class="mt-4">
-        <button *ngFor="let category of categories$ | async" class="mb-2 p-1 w-100 text-left" mat-button>
+        <button *ngFor="let category of categories" class="mb-2 p-1 w-100 text-left" mat-button>
           #{{category.title}}
         </button>
       </div>
@@ -27,7 +27,7 @@
   </div>
 
   <div class="col-10">
-    <div *ngIf="user$ | async">
+    <div *ngIf="user">
       <h2 class="mt-4 text-center">Трансляции друзей</h2>
       <div class="row">
 
@@ -37,7 +37,7 @@
     <div>
       <h2 class="mt-4 text-center">Самые популярные трансляции(по зрителям)</h2>
       <div class="row">
-        <app-stream-card *ngFor="let stream of streams$ | async"
+        <app-stream-card *ngFor="let stream of popularStreams"
                          [routerLink]="'/streams/' + stream.idStream"
                          [streamId]="stream.idStream"
                          class="col-auto m-2">

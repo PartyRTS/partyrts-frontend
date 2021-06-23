@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
 import {Stream} from '../../../../features/stream/models/stream.model';
 import {StreamService} from '../../../../features/stream/services/stream.service';
 import {AuthService} from '../../../../features/core/services/auth.service';
@@ -16,10 +15,10 @@ import {UserService} from '../../../../features/user/services/user.service';
   styleUrls: ['./home.page.scss']
 })
 export class HomePage implements OnInit {
-  streams$: Observable<Stream[]>;
-  user$: Observable<User>;
-  friends$: Observable<User[]>;
-  categories$: Observable<Category[]>;
+  popularStreams: Stream[];
+  user: User;
+  friends: User[];
+  categories: Category[];
 
   currentUserId: number;
 
@@ -32,15 +31,16 @@ export class HomePage implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.currentUserId = this.authService.userId;
     if (this.currentUserId) {
-      // FIXME
-      this.user$ = this.userService.getUser(this.currentUserId);
-      this.friends$ = this.userFriendService.getAllFriends(this.currentUserId);
+      this.user = await this.userService.getUser(this.currentUserId).toPromise();
+      this.friends = await this.userFriendService.getAllFriends(this.currentUserId).toPromise();
     }
-    this.categories$ = this.categoryService.getAllCategories();
-    this.streams$ = this.streamService.getAllStreams();
+    this.categories = await this.categoryService.getAllCategories().toPromise();
+
+    const streams = await this.streamService.getAllStreams().toPromise();
+    this.popularStreams = streams.sort((a, b) => a.fullUsers > b.fullUsers ? -1 : 1);
   }
 
 }
