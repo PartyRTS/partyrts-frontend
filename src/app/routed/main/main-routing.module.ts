@@ -10,6 +10,7 @@ import {UserPlaylistsPage} from './pages/user-playlists/user-playlists.page';
 import {UserFriendsPage} from './pages/user-friends/user-friends.page';
 import {SettingsPage} from './pages/settings/settings.page';
 import {SearchPage} from './pages/search/search.page';
+import {SearchByCategoryPage} from './pages/search-by-category/search-by-category.page';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'prefix'},
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'users/:id/videos', component: UserVideosPage},
   {path: 'users/:id/playlists', component: UserPlaylistsPage},
   {path: 'streams/:id', component: StreamPage},
+  {path: 'search-by-category', component: SearchByCategoryPage},
 ];
 
 @NgModule({

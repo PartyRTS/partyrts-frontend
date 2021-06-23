@@ -23,6 +23,7 @@ import {SearchPage} from './pages/search/search.page';
 import {StreamModule} from '../../features/stream/stream.module';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {SearchByCategoryPage} from './pages/search-by-category/search-by-category.page';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     SettingsPage,
     ChatComponent,
     SearchPage,
+    SearchByCategoryPage,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,13 @@
+<div class="container">
+  <div>
+    <h2 class="mt-4 text-center">Стримы по данной категории</h2>
+    <div class="row">
+      <app-stream-card *ngFor="let stream of streams"
+                       [routerLink]="'/streams/' + stream.idStream"
+                       [streamId]="stream.idStream"
+                       [title]="stream.streamTitle"
+                       class="m-2">
+      </app-stream-card>
+    </div>
+  </div>
+</div>

@@ -19,7 +19,9 @@
     <div class="my-2">
       <div class="ml-2 my-3 menu-list-header">Популярные категории</div>
       <div class="mt-4">
-        <button *ngFor="let category of categories" class="mb-2 p-1 w-100 text-left" mat-button>
+        <button *ngFor="let category of categories" [queryParams]="{categoryId: category.idCategory}"
+                [routerLink]="'/search-by-category'"
+                class="mb-2 p-1 w-100 text-left" mat-button>
           #{{category.title}}
         </button>
       </div>
