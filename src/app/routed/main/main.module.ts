@@ -22,6 +22,7 @@ import {MatListModule} from '@angular/material/list';
 import {SearchPage} from './pages/search/search.page';
 import {StreamModule} from '../../features/stream/stream.module';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatListModule,
     StreamModule,
     MatMenuModule,
+    MatSnackBarModule,
   ]
 })
 export class MainModule {

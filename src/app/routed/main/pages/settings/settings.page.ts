@@ -7,6 +7,9 @@ import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteUserDialog} from '../../../../features/user/components/delete-user/delete-user.dialog';
 import {AuthService} from '../../../../features/core/services/auth.service';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../../../environments/environment';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-settings',
@@ -21,11 +24,15 @@ export class SettingsPage implements OnInit {
 
   currentUserId: number;
 
+  selectedFile;
+
   constructor(
     private readonly userService: UserService,
     private readonly authService: AuthService,
     private readonly router: Router,
     private readonly dialog: MatDialog,
+    private readonly http: HttpClient,
+    private readonly snackbar: MatSnackBar,
   ) {
     this.infoForm = new FormGroup({
       firstName: new FormControl('', Validators.required),
@@ -59,10 +66,31 @@ export class SettingsPage implements OnInit {
     });
   }
 
+  onFileChanged(event): void {
+    this.selectedFile = event.target.files[0];
+  }
+
+  async onUpload(): Promise<void> {
+    const uploadData = new FormData();
+    uploadData.append('file', this.selectedFile, this.selectedFile.name);
+    try {
+      await this.http.post<any>(`${environment.apiUrl}/api/v1/aws/${this.currentUserId}/logo`, uploadData).toPromise();
+    } catch (e) {
+      // Fixme
+    }
+    this.user$ = this.userService.getUser(this.currentUserId);
+    this.snackbar.open('Иконка обновлена', 'Ок', {
+      duration: 3000
+    });
+  }
 
   saveInfo(): void {
     const userId = this.authService.userId;
-    this.userService.updateUser(userId, this.infoForm.value).subscribe();
+    this.userService.updateUser(userId, this.infoForm.value).subscribe(() => {
+      this.snackbar.open('Данные обновлены', 'Ок', {
+        duration: 3000
+      });
+    });
   }
 
   savePassword(): void {

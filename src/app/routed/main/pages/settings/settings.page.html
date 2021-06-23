@@ -7,7 +7,6 @@
       <img alt="video preview" height="250" src="{{user.logoUrl}}" width="250">
     </div>
 
-
     <div [formGroup]="infoForm" class="mt-4">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Имя</mat-label>
@@ -35,6 +34,17 @@
       </mat-form-field>
 
       <button (click)="saveInfo()" mat-flat-button>Сохранить</button>
+    </div>
+
+    <div class="mt-4">
+      <div class="h4 mt-3">Обновить фото</div>
+
+      <input
+        #fileInput
+        (change)="onFileChanged($event)" style="display: none"
+        type="file">
+      <button (click)="fileInput.click()" mat-button>Выбрать файл</button>
+      <button (click)="onUpload()" mat-button>Загрузить!</button>
     </div>
 
     <div [formGroup]="passwordForm" class="mt-4">
