@@ -17,7 +17,7 @@ export class StreamPage implements OnInit {
   currentUserId: number;
 
   stream: Stream;
-  user: User;
+  currentUser: User;
 
   constructor(
     private readonly authService: AuthService,
@@ -36,7 +36,7 @@ export class StreamPage implements OnInit {
     });
 
     this.userService.getUser(this.currentUserId).subscribe(user => {
-      this.user = user;
+      this.currentUser = user;
     });
   }
 }

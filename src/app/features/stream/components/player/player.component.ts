@@ -5,6 +5,7 @@ import {StreamService} from '../../services/stream.service';
 import {AuthService} from '../../../core/services/auth.service';
 import {Stream} from '../../models/stream.model';
 import {Video} from '../../../video/models/video.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-player',
@@ -25,10 +26,14 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   playlist: Video[];
   currentUserId: number;
 
+  playerLoaded = false;
+  playerStarted = false;
+
   constructor(
     private readonly streamService: StreamService,
     private readonly authService: AuthService,
-    private readonly rxStompService: RxStompService
+    private readonly rxStompService: RxStompService,
+    private readonly router: Router,
   ) {
   }
 
@@ -37,35 +42,53 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit(): Promise<void> {
+    console.log('load stream info');
     this.stream = await this.streamService.getStream(this.streamId).toPromise();
+    console.log(this.stream);
 
     if (!this.stream.activeStream) {
       // TODO
       return;
     }
 
+    console.log('load playlist info');
     this.playlist = await this.streamService.getVideos(this.streamId).toPromise();
+    console.log(this.playlist);
 
+    console.log('init player');
     await this.initPlayer();
+
+    this.playerLoaded = true;
+  }
+
+  async onPlayerStarted(): Promise<void> {
+    console.log('connect to ws');
     await this.connect(); // disconnect?
+
     if (this.isAdmin) {
-      this.sendStartVideoEvent();
+      this.sendTimeEvent();
+      this.sendStateEvent('play');
     } else {
+      if (this.stream.stopStream) {
+        this.playerRef.nativeElement.pause();
+      } else {
+        this.playerRef.nativeElement.play();
+      }
       this.sendEvent({type: 'join', userId: this.currentUserId});
     }
-    this.sendNextVideoEvent();
   }
 
   initPlayer(): Promise<void> {
     return new Promise(async (resolve, reject) => {
       if (!Hls.isSupported()) {
-        alert('oops! плеер не поддерживается!');
+        alert('oops! player not supported!');
         reject();
       }
       const hls = new Hls();
       hls.loadSource(await this.getVideoUrl());
       hls.attachMedia(this.playerRef?.nativeElement);
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        console.log('video manifest loaded');
         resolve();
       });
     });
@@ -73,9 +96,10 @@ export class PlayerComponent implements OnInit, AfterViewInit {
 
   async getVideoUrl(): Promise<string> {
     if (this.playlist.length === 0) {
-      // Todo
+      // todo
+      return;
     }
-    return this.playlist[0].videoUrl;
+    return this.playlist[this.stream.currentNumberVideo - 1].videoUrl;
   }
 
   connect(): void {
@@ -87,32 +111,49 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onMessageReceived(message): void {
+  async onMessageReceived(message): Promise<void> {
     console.log('onMessageReceived');
     console.log(message);
 
     if (message.type === 'join') {
       console.log('join');
       if (this.isAdmin) {
-        const status = this.playerRef?.nativeElement.paused ? 'paused' : 'played';
-        const data = {type: 'info', status, time: this.playerRef?.nativeElement.currentTime};
-        this.sendEvent(data);
+        this.sendTimeEvent();
       }
     }
-    if (message.type === 'status') {
-      console.log('status');
+    if (message.type === 'time') {
+      console.log('time');
       if (!this.isAdmin) {
-        const time = message.time;
-        const status = message.status;
-        console.log(time, status);
-        this.playerRef.nativeElement.currentTime = time;
-        if (status === 'played') {
-          this.playerRef?.nativeElement.play().catch(reason => console.log(reason));
-        }
-        if (status === 'paused') {
-          this.playerRef?.nativeElement.pause();
-        }
+        this.playerRef.nativeElement.currentTime = message.time;
+        this.playerRef.nativeElement.play();
       }
+    }
+    if (message.type === 'state') {
+      console.log('state');
+      if (message.state === 'pause') {
+        this.playerRef.nativeElement.pause();
+      }
+      if (message.state === 'play') {
+        this.playerRef.nativeElement.play();
+      }
+    }
+    if (message.type === 'next') {
+      this.playerRef.nativeElement.pause();
+
+      this.stream = await this.streamService.getStream(this.streamId).toPromise();
+      console.log('update stream: ', this.stream);
+      this.playlist = await this.streamService.getVideos(this.streamId).toPromise();
+      console.log('update playlist: ', this.playlist);
+
+      if (this.playlist.length === 0) {
+        return;
+      }
+      const hls = new Hls();
+      hls.loadSource(this.playlist[this.stream.currentNumberVideo - 1].videoUrl);
+      hls.attachMedia(this.playerRef?.nativeElement);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        this.playerRef.nativeElement.play();
+      });
     }
   }
 
@@ -123,17 +164,41 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     this.rxStompService.publish({destination: topic, body: JSON.stringify(message)});
   }
 
-  sendStartVideoEvent(): void {
-    console.log('sendStartVideoEvent');
-    const topic = `/app/streams/${this.streamId}/start`;
-    this.rxStompService.publish({destination: topic});
+  sendJoinEvent(): void {
+    console.log('sendSyncTimeEvent');
+    const message = {type: 'join'};
+    this.sendEvent(message);
   }
 
-  sendNextVideoEvent(): void {
+  sendTimeEvent(): void {
+    console.log('sendTimeEvent');
+    const message = {type: 'time', time: this.playerRef.nativeElement.currentTime};
+    this.sendEvent(message);
+  }
+
+  sendStateEvent(state: 'play' | 'pause'): void {
+    console.log('sendTimeEvent');
+    const message = {type: 'state', state};
+    this.sendEvent(message);
+  }
+
+  sendNextVideoCommand(): void {
     console.log('sendNextVideoEvent');
     const topic = `/app/streams/${this.streamId}/next`;
     this.rxStompService.publish({destination: topic});
   }
 
 
+  async onStartButtonClicked(): Promise<void> {
+    if (this.playerLoaded && !this.playerStarted) {
+      this.playerStarted = true;
+      await this.onPlayerStarted();
+    }
+  }
+
+  onEnded(): void {
+    if (this.isAdmin) {
+      this.sendNextVideoCommand();
+    }
+  }
 }
