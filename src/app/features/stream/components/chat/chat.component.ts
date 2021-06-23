@@ -133,15 +133,20 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   openAddVoteSkipDialog(): void {
-    this.dialog.open(SuggestSkipVideoDialog);
+    this.dialog.open(SuggestSkipVideoDialog, {
+      data: {streamId: this.streamId}
+    });
   }
 
-  openAddVoteAddDialog(): void {
-    this.dialog.open(SuggestAddVideoDialog);
+  async openAddVoteAddDialog(): Promise<void> {
+    this.dialog.open(SuggestAddVideoDialog, {
+      data: {streamId: this.streamId}
+    });
   }
 
-  addUserVote(vote: boolean): void {
+  async addUserVote(vote: boolean): Promise<void> {
     const newUserVote: NewUserVote = {idUser: this.authService.userId, votePlus: vote};
-    this.voteService.addUserVote(this.vote.idVote, newUserVote).subscribe();
+    await this.voteService.addUserVote(this.vote.idVote, newUserVote).toPromise();
+    this.vote = null;
   }
 }

@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {Vote} from '../models/vote.model';
+import {NewVoteAdd} from '../models/new-vote-add.model';
+import {NewVoteSkip} from '../models/new-vote-skip.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +18,11 @@ export class StreamVoteService {
     return this.http.get<Vote>(`${environment.apiUrl}/api/v1/streams/${streamId}/activeVote`);
   }
 
+  addVoteAdd(streamId: number, newVoteAdd: NewVoteAdd): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/api/v1/streams/${streamId}/addVoteAdd`, newVoteAdd);
+  }
 
-  // Todo
-
-  // addVoteAdd(streamId: number, newMessage: NewVoteAdd): Observable<void> {
-  //   return this.http.post<void>(`${environment.apiUrl}/api/v1/streams/${streamId}/messages`, newMessage);
-  // }
-  //
-  // addVoteSkip(streamId: number, newMessage: NewVoteSkip): Observable<void> {
-  //   return this.http.post<void>(`${environment.apiUrl}/api/v1/streams/${streamId}/messages`, newMessage);
-  // }
+  addVoteSkip(streamId: number, newVoteSkip: NewVoteSkip): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/api/v1/streams/${streamId}/addSkipVote`, newVoteSkip);
+  }
 }

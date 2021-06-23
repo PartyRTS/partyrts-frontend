@@ -2,6 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {StreamService} from '../../services/stream.service';
 import {StreamVoteService} from '../../services/stream-vote.service';
+import {AuthService} from '../../../core/services/auth.service';
+import {NewVoteSkip} from '../../models/new-vote-skip.model';
 
 @Component({
   selector: 'app-suggest-skip-video',
@@ -9,11 +11,13 @@ import {StreamVoteService} from '../../services/stream-vote.service';
   styleUrls: ['./suggest-skip-video.dialog.scss']
 })
 export class SuggestSkipVideoDialog implements OnInit {
-  private streamId: number;
+  streamId: number;
+  currentUserId: number;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
     private readonly dialogRef: MatDialogRef<SuggestSkipVideoDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private readonly authService: AuthService,
     private readonly streamService: StreamService,
     private readonly streamVoteService: StreamVoteService,
   ) {
@@ -23,7 +27,11 @@ export class SuggestSkipVideoDialog implements OnInit {
     this.streamId = this.data.streamId;
   }
 
-  onClick(): void {
-    // this.streamVoteService.addVoteAdd(this.streamId,);
+  async onClick(): Promise<void> {
+    const videos = await this.streamService.getVideos(this.streamId).toPromise();
+    const lastVideoNumber = videos.length - 1;
+    const newVoteSkip: NewVoteSkip = {numberSkipVideo: lastVideoNumber};
+    await this.streamVoteService.addVoteSkip(this.streamId, newVoteSkip).toPromise();
+    this.dialogRef.close();
   }
 }
