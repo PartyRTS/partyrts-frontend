@@ -15,7 +15,7 @@ import {UserService} from '../../../../features/user/services/user.service';
   styleUrls: ['./home.page.scss']
 })
 export class HomePage implements OnInit {
-  popularStreams: Stream[];
+  popularActiveStreams: Stream[];
   user: User;
   friends: User[];
   categories: Category[];
@@ -40,7 +40,9 @@ export class HomePage implements OnInit {
     this.categories = await this.categoryService.getAllCategories().toPromise();
 
     const streams = await this.streamService.getAllStreams().toPromise();
-    this.popularStreams = streams.sort((a, b) => a.fullUsers > b.fullUsers ? -1 : 1);
+    this.popularActiveStreams = streams
+      .filter(stream => stream.activeStream)
+      .sort((a, b) => a.fullUsers > b.fullUsers ? -1 : 1);
   }
 
 }
