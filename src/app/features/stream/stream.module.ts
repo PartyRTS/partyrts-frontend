@@ -17,6 +17,7 @@ import {MatListModule} from '@angular/material/list';
 import {PlayerComponent} from './components/player/player.component';
 import {SuggestAddVideoDialog} from './components/suggest-add-video/suggest-add-video.dialog';
 import {SuggestSkipVideoDialog} from './components/suggest-skip-video/suggest-skip-video.dialog';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import {SuggestSkipVideoDialog} from './components/suggest-skip-video/suggest-sk
     MatAutocompleteModule,
     MatOptionModule,
     MatListModule,
+    MatSelectModule,
   ]
 })
 export class StreamModule {

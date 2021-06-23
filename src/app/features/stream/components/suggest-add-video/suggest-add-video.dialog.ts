@@ -8,6 +8,7 @@ import {Video} from '../../../video/models/video.model';
 import {UserVideoService} from '../../../user/services/user-video.service';
 import {StreamVoteService} from '../../services/stream-vote.service';
 import {NewVoteAdd} from '../../models/new-vote-add.model';
+import {Stream} from '../../models/stream.model';
 
 @Component({
   selector: 'app-suggest-add-video',
@@ -20,12 +21,17 @@ export class SuggestAddVideoDialog implements OnInit {
 
   // streamTitleForm = new FormControl('', [Validators.required]);
 
-  videos: Video[];
+  userVideos: Video[];
+  stream: Stream;
 
   currentUserId: number;
+  streamId: number;
 
   selectedVideoCard: VideoCardComponent;
-  private streamId: number;
+
+  numberPrevVideo: number;
+  variants = [];
+  streamVideos: Video[];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -41,7 +47,15 @@ export class SuggestAddVideoDialog implements OnInit {
   async ngOnInit(): Promise<void> {
     this.streamId = this.data.streamId;
     this.currentUserId = this.authService.userId;
-    this.videos = await this.userVideoService.getAllVideos(this.currentUserId).toPromise();
+    this.userVideos = await this.userVideoService.getAllVideos(this.currentUserId).toPromise();
+    this.stream = await this.streamService.getStream(this.streamId).toPromise();
+    this.streamVideos = await this.streamService.getVideos(this.streamId).toPromise();
+
+    console.log(this.streamVideos);
+
+    for (let i = this.stream.currentNumberVideo; i < this.streamVideos.length; i++) {
+      this.variants.push({number: i, video: this.streamVideos[i]});
+    }
   }
 
   select(videoElement: VideoCardComponent): void {
@@ -55,7 +69,7 @@ export class SuggestAddVideoDialog implements OnInit {
   }
 
   async addStream(): Promise<void> {
-    const newVoteAdd: NewVoteAdd = {idAddVideo: this.selectedVideoCard.videoId, numberPrevVideo: 0};
+    const newVoteAdd: NewVoteAdd = {idAddVideo: this.selectedVideoCard.videoId, numberPrevVideo: Number(this.numberPrevVideo)};
     await this.streamVoteService.addVoteAdd(this.streamId, newVoteAdd).toPromise();
     this.dialogRef.close();
   }

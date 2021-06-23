@@ -4,12 +4,18 @@
   <h2>Видео</h2>
 
   <div class="row">
-    <app-video-card #playlistElement (click)="select(playlistElement)" *ngFor="let video of videos"
+    <app-video-card #playlistElement (click)="select(playlistElement)" *ngFor="let video of userVideos"
                     [videoId]="video.idVideo"
                     class="col-auto">
     </app-video-card>
   </div>
 
+  <mat-form-field appearance="fill">
+    <mat-label>Select an option</mat-label>
+    <mat-select [(value)]="numberPrevVideo">
+      <mat-option *ngFor="let variant of variants" value="{{variant.number}}">{{variant.video.title}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <div mat-dialog-actions>
