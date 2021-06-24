@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiHost: 'pws21-backend.herokuapp.com',
-  apiUrl: 'https://pws21-backend.herokuapp.com',
+  apiHost: '80.78.251.171',
+  apiUrl: 'https://80.78.251.171',
 };
