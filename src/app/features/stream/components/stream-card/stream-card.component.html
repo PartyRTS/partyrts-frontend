@@ -9,6 +9,7 @@
       <mat-icon>visibility</mat-icon>
     </div>
   </div>
-  <img *ngIf="currentVideo" alt="video preview" class="mt-2" src="{{currentVideo.previewUrl}}">
+  <img *ngIf="currentVideo" [height]="200" [width]="300" alt="video preview" class="mt-2"
+       src="{{currentVideo.previewUrl}}">
   <div class="p-2 text-center">{{stream.streamTitle}}</div>
 </div>
