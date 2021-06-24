@@ -7,10 +7,11 @@
   </div>
 
   <div class="row">
-    <app-playlist-card
+    <app-deletable-stream-card
       *ngFor="let playlist of playlists$ | async"
       [playlistId]="playlist.idPlaylist"
+      (deleteEvent)="onDeletePlaylist(playlist.idPlaylist)"
       class="m-2">
-    </app-playlist-card>
+    </app-deletable-stream-card>
   </div>
 </div>

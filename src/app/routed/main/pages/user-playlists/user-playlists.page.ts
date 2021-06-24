@@ -46,4 +46,9 @@ export class UserPlaylistsPage implements OnInit {
       this.playlists$ = this.userPlaylistService.getAllPlaylists(this.userId);
     });
   }
+
+  async onDeletePlaylist(idPlaylist: number): Promise<void> {
+    await this.userPlaylistService.deletePlaylist(this.currentUserId, idPlaylist).toPromise();
+    this.playlists$ = this.userPlaylistService.getAllPlaylists(this.userId);
+  }
 }

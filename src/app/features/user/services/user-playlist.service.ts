@@ -15,4 +15,8 @@ export class UserPlaylistService {
   getAllPlaylists(userId: number): Observable<Playlist[]> {
     return this.http.get<Playlist[]>(`${environment.apiUrl}/api/v1/users/${userId}/playlists`);
   }
+
+  deletePlaylist(userId: number, playlistId: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/api/v1/users/${userId}/playlists/${playlistId}`);
+  }
 }

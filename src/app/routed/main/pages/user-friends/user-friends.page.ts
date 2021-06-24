@@ -40,7 +40,7 @@ export class UserFriendsPage implements OnInit {
   }
 
   declineFriendRequest(userId: number): void {
-    this.friendRequestService.declineFriendRequest(userId, this.currentUserId).subscribe(() => {
+    this.friendRequestService.declineFriendRequest(this.currentUserId, userId).subscribe(() => {
       this.subscribers$ = this.friendRequestService.getAllFriendRequests(this.currentUserId);
       this.friends$ = this.userFriendService.getAllFriends(this.currentUserId);
     });

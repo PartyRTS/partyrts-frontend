@@ -8,11 +8,16 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AddPlaylistDialog} from './components/add-playlist/add-playlist.dialog';
 import {VideoModule} from '../video/video.module';
+import {DeletablePlaylistCardComponent} from './components/deletable-stream-card/deletable-playlist-card.component';
 
 
 @NgModule({
   declarations: [
-    AddPlaylistDialog
+    AddPlaylistDialog,
+    DeletablePlaylistCardComponent,
+  ],
+  exports: [
+    DeletablePlaylistCardComponent
   ],
   imports: [
     CommonModule,

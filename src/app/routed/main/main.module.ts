@@ -24,6 +24,7 @@ import {StreamModule} from '../../features/stream/stream.module';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {SearchByCategoryPage} from './pages/search-by-category/search-by-category.page';
+import {PlaylistModule} from '../../features/playlist/playlist.module';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import {SearchByCategoryPage} from './pages/search-by-category/search-by-categor
     StreamModule,
     MatMenuModule,
     MatSnackBarModule,
+    PlaylistModule,
   ]
 })
 export class MainModule {
