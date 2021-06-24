@@ -31,7 +31,7 @@
       <button mat-menu-item routerLink="/settings">
         <span>Настройки</span>
       </button>
-      <button mat-menu-item routerLink="/admin">
+      <button *ngIf="isModerator === true" mat-menu-item routerLink="/admin">
         <span>Панель управления</span>
       </button>
       <button (click)="logout()" mat-menu-item>
