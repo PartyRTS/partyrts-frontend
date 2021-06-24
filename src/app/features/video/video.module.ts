@@ -6,6 +6,12 @@ import {StreamCardComponent} from '../stream/components/stream-card/stream-card.
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {DeletableVideoCardComponent} from './components/deletable-video-card/deletable-video-card.component';
+import {AddVideoDialog} from './add-video/add-video.dialog';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
 
 
 @NgModule({
@@ -13,7 +19,8 @@ import {DeletableVideoCardComponent} from './components/deletable-video-card/del
     VideoCardComponent,
     PlaylistCardComponent,
     StreamCardComponent,
-    DeletableVideoCardComponent
+    DeletableVideoCardComponent,
+    AddVideoDialog
   ],
   exports: [
     VideoCardComponent,
@@ -25,6 +32,11 @@ import {DeletableVideoCardComponent} from './components/deletable-video-card/del
     CommonModule,
     MatIconModule,
     MatCardModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatInputModule,
   ]
 })
 export class VideoModule {

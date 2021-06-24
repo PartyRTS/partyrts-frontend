@@ -1,7 +1,11 @@
 <div *ngIf="user$ | async as user" class="container">
-  <h1>
-    Видео <a href="/users/{{user.idUser}}">{{user.firstName}} {{user.secondName}}</a>
-  </h1>
+  <div class="row">
+    <h1>
+      Видео <a href="/users/{{user.idUser}}">{{user.firstName}} {{user.secondName}}</a>
+    </h1>
+    <button (click)="addVideo()" mat-button>Добавить видео</button>
+  </div>
+
   <div class="row">
     <app-deletable-video-card (deleteEvent)="onDeleteVideo(video.idVideo)"
                               *ngFor="let video of videos$ | async"

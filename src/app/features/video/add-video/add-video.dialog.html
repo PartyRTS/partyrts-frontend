@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Добавить видео</h1>
+
+<div mat-dialog-content>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Название видео</mat-label>
+    <input [formControl]="videoTitleForm" matInput type="text">
+  </mat-form-field>
+</div>
+
+<h3>Видео</h3>
+<input
+  #videoFileInput
+  (change)="onVideoFileChanged($event)" style="display: none"
+  type="file">
+<button (click)="videoFileInput.click()" mat-button>Выбрать файл</button>
+
+<h3>Превью</h3>
+<input
+  #previewFileInput
+  (change)="onPreviewFileChanged($event)" style="display: none"
+  type="file">
+<button (click)="previewFileInput.click()" mat-button>Выбрать файл</button>
+
+<div mat-dialog-actions>
+  <button (click)="upload()" mat-button>Загрузить видео</button>
+</div>

@@ -6,6 +6,8 @@ import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../../../../features/core/services/auth.service';
 import {UserService} from '../../../../features/user/services/user.service';
 import {User} from '../../../../features/user/models/user.model';
+import {MatDialog} from '@angular/material/dialog';
+import {AddVideoDialog} from '../../../../features/video/add-video/add-video.dialog';
 
 @Component({
   selector: 'app-user-videos',
@@ -23,6 +25,7 @@ export class UserVideosPage implements OnInit {
     private readonly userService: UserService,
     private readonly userVideoService: UserVideoService,
     private readonly route: ActivatedRoute,
+    private readonly dialog: MatDialog,
   ) {
   }
 
@@ -36,5 +39,9 @@ export class UserVideosPage implements OnInit {
   async onDeleteVideo(idVideo: number): Promise<void> {
     await this.userVideoService.deleteVideo(this.currentUserId, idVideo).toPromise();
     this.videos$ = this.userVideoService.getAllVideos(this.userId);
+  }
+
+  addVideo(): void {
+    this.dialog.open(AddVideoDialog);
   }
 }
