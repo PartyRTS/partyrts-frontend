@@ -3,9 +3,10 @@
     Видео <a href="/users/{{user.idUser}}">{{user.firstName}} {{user.secondName}}</a>
   </h1>
   <div class="row">
-    <app-video-card *ngFor="let video of videos$ | async"
-                    [videoId]="video.idVideo"
-                    class="m-2">
-    </app-video-card>
+    <app-deletable-video-card (deleteEvent)="onDeleteVideo(video.idVideo)"
+                              *ngFor="let video of videos$ | async"
+                              [videoId]="video.idVideo"
+                              class="m-2">
+    </app-deletable-video-card>
   </div>
 </div>

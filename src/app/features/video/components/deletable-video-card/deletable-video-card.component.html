@@ -1,0 +1,8 @@
+<div *ngIf="video$ | async as video" class="d-flex flex-column w-auto h-auto p-2 border">
+  <div *ngIf="creator$ | async as creator" class="flex-grow-1 p-2">{{creator.firstName}} {{creator.secondName}}</div>
+  <img alt="video preview" height="200px" src="{{video.previewUrl}}" width="300px">
+  <div class="d-flex flex-row">
+    <div class="text-center flex-grow-1">{{video.title}}</div>
+    <mat-icon (click)="onDeleteButtonClick()" class="material-icons-outlined">delete</mat-icon>
+  </div>
+</div>

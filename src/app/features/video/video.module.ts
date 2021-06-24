@@ -5,18 +5,21 @@ import {PlaylistCardComponent} from '../playlist/components/playlist-card/playli
 import {StreamCardComponent} from '../stream/components/stream-card/stream-card.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
+import {DeletableVideoCardComponent} from './components/deletable-video-card/deletable-video-card.component';
 
 
 @NgModule({
   declarations: [
     VideoCardComponent,
     PlaylistCardComponent,
-    StreamCardComponent
+    StreamCardComponent,
+    DeletableVideoCardComponent
   ],
   exports: [
     VideoCardComponent,
     PlaylistCardComponent,
-    StreamCardComponent
+    StreamCardComponent,
+    DeletableVideoCardComponent
   ],
   imports: [
     CommonModule,

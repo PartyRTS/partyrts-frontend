@@ -33,4 +33,8 @@ export class UserVideosPage implements OnInit {
     this.videos$ = this.userVideoService.getAllVideos(this.userId);
   }
 
+  async onDeleteVideo(idVideo: number): Promise<void> {
+    await this.userVideoService.deleteVideo(this.currentUserId, idVideo).toPromise();
+    this.videos$ = this.userVideoService.getAllVideos(this.userId);
+  }
 }
