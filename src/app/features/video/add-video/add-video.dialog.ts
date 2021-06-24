@@ -53,7 +53,6 @@ export class AddVideoDialog implements OnInit {
     const title = this.videoTitleForm.value;
     const data: NewVideo = {title, idUser: this.currentUserId};
     const video = await this.http.post<Video>(`${environment.apiUrl}/api/v1/videos`, data).toPromise();
-    await this.http.post<Video>(`${environment.apiUrl}/api/v1/videos`, data).toPromise();
 
     const uploadData = new FormData();
     uploadData.append('file', this.selectedVideoFile, this.selectedVideoFile.name);
